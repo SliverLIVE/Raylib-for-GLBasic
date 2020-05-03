@@ -8,14 +8,22 @@ LOCAL Title$ = "Raylib for GLBasic!"
 InitWindow(800,600, Title$)
 SetTargetFPS(60)
 
+LOCAL COLOR_LIGHTGRAY = ColorInstance(200, 200, 200, 255)
+LOCAL COLOR_RAYWHITE = ColorInstance(245, 245, 245, 255)
+LOCAL COLOR_RED = ColorInstance(255, 0, 0,255)
+
+LOCAL FONT_DEFAULT = GetFontDefault()
+
+LOCAL myFont = LoadFontEx("fonts/PermanentMarker.ttf", 40, 0, 255)
+
 WHILE NOT WindowShouldClose()
-	
+
 	BeginDrawing()
-	
-		DrawFPS(20,20)
+
+		ClearBackground(COLOR_LIGHTGRAY)
+		DrawText("Congrats! You created your first window!", 190, 200, 20, COLOR_RED)
+		DrawTextEx(myFont, "Oh, hi...! I'm the new Font!", 200, 250, 40, 2, COLOR_RED)
 		
-		ClearBackground(COLOR_SKYBLUE)
-		DrawText("Congrats! You created your first window!", 190, 200, 20, COLOR_RAYWHITE)
 	EndDrawing()
 WEND
 

@@ -9,70 +9,68 @@ INLINE
 
 namespace LIB{
 	#include "raylib.h"
+	
+	DGArray<Color>_Color;
+	int CreateColorInstance(Color c)
+	{
+		DIMPUSH(_Color, c);
+		return LEN(_Color())-1;		
+	}
+	Color GetColorInstance(int index)
+	{
+		return _Color(index);
+	}
+	
+	DGArray<Font>_Font;
+	int CreateFontInstance(Font f)
+	{
+		DIMPUSH(_Font, f);
+		return LEN(_Font())-1;
+	}
+	Font GetFontInstance(int index)
+	{
+		return _Font(index);
+	}	
 }
 
 namespace __GLBASIC__{
 ENDINLINE
 
-GLOBAL COLOR_LIGHTGRAY 	// Light Gray
-GLOBAL COLOR_GRAY      	// Gray
-GLOBAL COLOR_DARKGRAY   // Dark Gray
-GLOBAL COLOR_YELLOW     // Yellow
-GLOBAL COLOR_GOLD       // Gold
-GLOBAL COLOR_ORANGE     // Orange
-GLOBAL COLOR_PINK       // Pink
-GLOBAL COLOR_RED        // Red
-GLOBAL COLOR_MAROON     // Maroon
-GLOBAL COLOR_GREEN      // Green
-GLOBAL COLOR_LIME       // Lime
-GLOBAL COLOR_DARKGREEN  // Dark Green
-GLOBAL COLOR_SKYBLUE    // Sky Blue
-GLOBAL COLOR_BLUE       // Blue
-GLOBAL COLOR_DARKBLUE   // Dark Blue
-GLOBAL COLOR_PURPLE     // Purple
-GLOBAL COLOR_VIOLET     // Violet
-GLOBAL COLOR_DARKPURPLE // Dark Purple
-GLOBAL COLOR_BEIGE      // Beige
-GLOBAL COLOR_BROWN      // Brown
-GLOBAL COLOR_DARKBROWN  // Dark Brown
+SUB __RAYLIB_STRUCT_WRAPPERS:
+	// JUST FOR QUICKJUMPING IN SOURCE!
+ENDSUB
 
-GLOBAL COLOR_WHITE      // White
-GLOBAL COLOR_BLACK      // Black
-GLOBAL COLOR_BLANK      // Blank (Transparent)
-GLOBAL COLOR_MAGENTA    // Magenta
-GLOBAL COLOR_RAYWHITE   // My own White (raylib logo)
+FUNCTION ColorInstance: r, g, b, a
+	INLINE
+		LIB::Color color;
+		
+		color.r = r;
+		color.g = g;
+		color.b = b;
+		color.a = a;		
+		return LIB::CreateColorInstance(color);
+	ENDINLINE
+ENDFUNCTION 
+
+FUNCTION FontInstance:
+INLINE
+	LIB::Font font;
+	return LIB::CreateFontInstance(font);
+ENDINLINE
+ENDFUNCTION 
+
+
+
+
+SUB _RAYLIB_CORE:
+	// JUST FOR QUICKJUMPING IN SOURCE!
+ENDSUB
 
 //------------------------------
 // Window-related functions
 //------------------------------
 FUNCTION InitWindow: width, height, title$  // Initialize window and OpenGL context
-	COLOR_LIGHTGRAY  = ColorToInt( 200, 200, 200, 255 )   	// Light Gray
-	COLOR_GRAY       = ColorToInt( 130, 130, 130, 255 )   	// Gray
- 	COLOR_DARKGRAY   = ColorToInt( 80, 80, 80, 255 )     	// Dark Gray
- 	COLOR_YELLOW     = ColorToInt( 253, 249, 0, 255 )     	// Yellow
- 	COLOR_GOLD       = ColorToInt( 255, 203, 0, 255 )     	// Gold
- 	COLOR_ORANGE     = ColorToInt( 255, 161, 0, 255 )     	// Orange
- 	COLOR_PINK       = ColorToInt( 255, 109, 194, 255 )   	// Pink
- 	COLOR_RED        = ColorToInt( 230, 41, 55, 255 )     	// Red
- 	COLOR_MAROON     = ColorToInt( 190, 33, 55, 255 )     	// Maroon
- 	COLOR_GREEN      = ColorToInt( 0, 228, 48, 255 )      	// Green
- 	COLOR_LIME       = ColorToInt( 0, 158, 47, 255 )      	// Lime
- 	COLOR_DARKGREEN  = ColorToInt( 0, 117, 44, 255 )      	// Dark Green
- 	COLOR_SKYBLUE    = ColorToInt( 102, 191, 255, 255 )   	// Sky Blue
- 	COLOR_BLUE       = ColorToInt( 0, 121, 241, 255 )     	// Blue
- 	COLOR_DARKBLUE   = ColorToInt( 0, 82, 172, 255 )      	// Dark Blue
- 	COLOR_PURPLE     = ColorToInt( 200, 122, 255, 255 )   	// Purple
- 	COLOR_VIOLET     = ColorToInt( 135, 60, 190, 255 )    	// Violet
- 	COLOR_DARKPURPLE = ColorToInt( 112, 31, 126, 255 )    	// Dark Purple
- 	COLOR_BEIGE      = ColorToInt( 211, 176, 131, 255 )   	// Beige
- 	COLOR_BROWN      = ColorToInt( 127, 106, 79, 255 )    	// Brown
- 	COLOR_DARKBROWN  = ColorToInt( 76, 63, 47, 255 )      	// Dark Brown
 
- 	COLOR_WHITE      = ColorToInt( 255, 255, 255, 255 )   	// White
- 	COLOR_BLACK      = ColorToInt( 0, 0, 0, 255 )         	// Black
- 	COLOR_BLANK      = ColorToInt( 0, 0, 0, 0 )           	// Blank (Transparent)
- 	COLOR_MAGENTA    = ColorToInt( 255, 0, 255, 255 )     	// Magenta
- 	COLOR_RAYWHITE   = ColorToInt( 245, 245, 245, 255 )   	// My own White (raylib logo)
 INLINE
 	LIB::InitWindow(width, height, title_Str.c_str());
 ENDINLINE
@@ -174,9 +172,9 @@ INLINE
 ENDINLINE
 ENDFUNCTION
 
-//FUNCTION *GetWindowHandle: void  // Get native window handle
+//FUNCTION GetWindowHandle: void  // Get native window handle
 //INLINE
-//	LIB::*GetWindowHandle(void);
+//	LIB::GetWindowHandle(void);
 //ENDINLINE
 //ENDFUNCTION
 
@@ -284,7 +282,7 @@ ENDFUNCTION
 //------------------------------
 FUNCTION ClearBackground: color  // Set background color
 INLINE
-	LIB::ClearBackground(LIB::GetColor(color));
+	LIB::ClearBackground( LIB::GetColorInstance(color) );
 ENDINLINE
 ENDFUNCTION
 
@@ -434,7 +432,7 @@ ENDFUNCTION
 //	return LIB::ColorNormalize(Color color);
 //ENDINLINE
 //ENDFUNCTION
-//
+
 //FUNCTION ColorFromNormalized: Vector4 normalized  // Returns color from normalized values [0..1]
 //INLINE
 //	return LIB::ColorFromNormalized(Vector4 normalized);
@@ -459,12 +457,13 @@ ENDFUNCTION
 //ENDINLINE
 //ENDFUNCTION
 //
-//FUNCTION Fade: Color color, float alpha  // Color fade-in or fade-out, alpha goes from 0.0f to 1.0f
-//INLINE
-//	return LIB::Fade(Color color, float alpha);
-//ENDINLINE
-//ENDFUNCTION
-//
+FUNCTION Fade: color, alpha#  // Color fade-in or fade-out, alpha goes from 0.0f to 1.0f
+INLINE
+	LIB::_Color(color) =  LIB::Fade(LIB::_Color(color), (float)alpha);
+	return color;
+ENDINLINE
+ENDFUNCTION
+
 ////------------------------------
 //// Misc. functions
 ////------------------------------
@@ -988,3 +987,256 @@ INLINE
 	LIB::SetCameraMoveControls(frontKey, backKey, rightKey, leftKey, upKey, downKey);
 ENDINLINE
 ENDFUNCTION
+
+
+
+
+
+SUB _RAYLIB_TEXT:
+	// JUST FOR QUICKJUMPING IN SOURCE!
+ENDSUB
+
+//------------------------------
+// Font loading/unloading functions
+//------------------------------
+FUNCTION GetFontDefault:  // Get the default Font
+INLINE
+	LIB::Font f;
+	f = LIB::GetFontDefault();
+	return CreateFontInstance(f);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION LoadFont_: fileName$  // Load font from file into GPU memory
+INLINE
+	LIB::Font f;
+	f = LIB::LoadFont(fileName_Str.c_str());
+	return CreateFontInstance(f);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION LoadFontEx: fileName$, fontSize, fontChars, charsCount  // Load font from file with extended parameters
+INLINE
+	LIB::Font f;
+	f = LIB::LoadFontEx(fileName_Str.c_str(), fontSize, 0, charsCount);
+	return CreateFontInstance(f);
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION LoadFontFromImage: Image image, Color KEY, int firstChar  // Load font from Image
+//INLINE
+//	return LIB::LoadFontFromImage(Image image, Color key, int firstChar);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION *LoadFontData: const char *fileName, int fontSize, int *fontChars, int charsCount, int TYPE  // Load font data for further use
+//INLINE
+//	return LIB::*LoadFontData(const char *fileName, int fontSize, int *fontChars, int charsCount, int type);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GenImageFontAtlas: const CharInfo *chars, Rectangle **recs, int charsCount, int fontSize, int padding, int packMethod  // Generate image font atlas using chars info
+//INLINE
+//	return LIB::GenImageFontAtlas(const CharInfo *chars, Rectangle **recs, int charsCount, int fontSize, int padding, int packMethod);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION UnloadFont: Font font  // Unload Font from GPU memory
+//INLINE
+//	LIB::UnloadFont(Font font);
+//ENDINLINE
+//ENDFUNCTION
+//
+////------------------------------
+//// Text drawing functions
+////------------------------------
+FUNCTION DrawFPS: posX, posY  // Shows current FPS
+INLINE
+	LIB::DrawFPS(posX, posY);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION DrawText: text$, posX, posY, fontSize, color  // Draw text
+INLINE
+	LIB::DrawText(text_Str.c_str(), posX, posY, fontSize, LIB::_Color(color));
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION DrawTextEx: font, text$, posX, posY, fontSize#, spacing#, color  // Draw text using font and additional parameters
+INLINE
+	LIB::DrawTextEx(LIB::_Font(font), text_Str.c_str(), (LIB::Vector2){(float)posX, (float)posY}, (float)fontSize, (float)spacing, LIB::_Color(color));
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION DrawTextRec: Font font, const char *text, Rectangle rec, float fontSize, float spacing, bool wordWrap, Color tint  // Draw text using font inside rectangle limits
+//INLINE
+//	LIB::DrawTextRec(Font font, const char *text, Rectangle rec, float fontSize, float spacing, bool wordWrap, Color tint);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION DrawTextCodepoint: Font font, int codepoint, Vector2 position, float scale, Color tint  // Draw one character
+//INLINE
+//	LIB::DrawTextCodepoint(Font font, int codepoint, Vector2 position, float scale, Color tint);
+//ENDINLINE
+//ENDFUNCTION
+//
+////------------------------------
+//// Text misc. functions
+////------------------------------
+//FUNCTION MeasureText: const char *text, int fontSize  // Measure string width for default font
+//INLINE
+//	return LIB::MeasureText(const char *text, int fontSize);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION MeasureTextEx: Font font, const char *text, float fontSize, float spacing  // Measure string size for Font
+//INLINE
+//	return LIB::MeasureTextEx(Font font, const char *text, float fontSize, float spacing);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GetGlyphIndex: Font font, int codepoint  // Get index position for a unicode character on font
+//INLINE
+//	return LIB::GetGlyphIndex(Font font, int codepoint);
+//ENDINLINE
+//ENDFUNCTION
+//
+////------------------------------
+//// Text strings management functions (no utf8 strings, only byte chars)
+////------------------------------
+////------------------------------
+//// NOTE: Some strings allocate memory internally for returned strings, just be careful!
+////------------------------------
+//FUNCTION TextCopy: char *dst, const char *src  // Copy one string to another, returns bytes copied
+//INLINE
+//	return LIB::TextCopy(char *dst, const char *src);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION TextIsEqual: const char *text1, const char *text2  // Check if two text string are equal
+//INLINE
+//	return LIB::TextIsEqual(const char *text1, const char *text2);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION int: const char *text  // Get text length, checks for '\0' ending
+//INLINE
+//	return LIB::int(const char *text);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION char: const char *text, ...  // Text formatting with variables
+//INLINE
+//	return LIB::char(const char *text, ...);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION char: const char *text, int position, int length  // Get a piece of a text string
+//INLINE
+//	return LIB::char(const char *text, int position, int length);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION *TextReplace: char *text, const char *replace, const char *by  // Replace text string
+//INLINE
+//	return LIB::*TextReplace(char *text, const char *replace, const char *by);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION *TextInsert: const char *text, const char *insert, int position  // Insert text in a position
+//INLINE
+//	return LIB::*TextInsert(const char *text, const char *insert, int position);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION char: const char **textList, int count, const char *delimiter  // Join text strings with delimiter
+//INLINE
+//	return LIB::char(const char **textList, int count, const char *delimiter);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION char: const char *text, char delimiter, int *count  // Split text into multiple strings
+//INLINE
+//	return LIB::char(const char *text, char delimiter, int *count);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION TextAppend: char *text, const char *append, int *position  // Append text at specific position and move cursor!
+//INLINE
+//	LIB::TextAppend(char *text, const char *append, int *position);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION TextFindIndex: const char *text, const char *find  // Find first text occurrence within a string
+//INLINE
+//	return LIB::TextFindIndex(const char *text, const char *find);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION char: const char *text  // Get upper case version of provided string
+//INLINE
+//	return LIB::char(const char *text);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION char: const char *text  // Get lower case version of provided string
+//INLINE
+//	return LIB::char(const char *text);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION char: const char *text  // Get Pascal case notation version of provided string
+//INLINE
+//	return LIB::char(const char *text);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION TextToInteger: const char *text  // Get integer value from text
+//INLINE
+//	return LIB::TextToInteger(const char *text);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION *TextToUtf8: int *codepoints, int length  // Encode text codepoint into utf8 text
+//INLINE
+//	return LIB::*TextToUtf8(int *codepoints, int length);
+//ENDINLINE
+//ENDFUNCTION
+//
+////------------------------------
+//// UTF8 text strings management functions
+////------------------------------
+//FUNCTION *GetCodepoints: const char *text, int *count  // Get all codepoints in a string, codepoints count returned by parameters
+//INLINE
+//	return LIB::*GetCodepoints(const char *text, int *count);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GetCodepointsCount: const char *text  // Get total number of characters
+//INLINE
+//	return LIB::GetCodepointsCount(const char *text);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GetNextCodepoint: const char *text, int *bytesProcessed  // Returns next codepoint in a UTF8 encoded string; 0x3f
+//INLINE
+//	return LIB::GetNextCodepoint(const char *text, int *bytesProcessed);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION char: int codepoint, int *byteLength  // Encode codepoint into utf8 text
+//INLINE
+//	return LIB::char(int codepoint, int *byteLength);
+//ENDINLINE
+//ENDFUNCTION
+
+
+// TESTING STUFF!!!!!
+SUB _TESTINGAREA:
+ENDSUB
+//
+//FUNCTION GenTextureMipmaps: font
+//INLINE
+//	LIB::GenTextureMipmaps(&LIB::_Font(font).texture);
+//ENDINLINE
+//ENDFUNCTION 

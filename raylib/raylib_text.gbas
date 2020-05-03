@@ -3,16 +3,6 @@
 // Start: Sunday, May 03, 2020
 // IDE Version: 16.508
 
-INLINE
-}
-
-namespace LIB{
-	#include "raylib.h"
-}
-
-namespace __GLBASIC__{
-ENDINLINE
-
 
 //------------------------------
 // Font loading/unloading functions
@@ -23,7 +13,7 @@ ENDINLINE
 //ENDINLINE
 //ENDFUNCTION
 //
-//FUNCTION LOADFONT: const char *fileName  // Load font from file into GPU memory 
+//FUNCTION LOADFONT: const char *fileName  // Load font from file into GPU memory
 //INLINE
 //	return LIB::LoadFont(const char *fileName);
 //ENDINLINE
@@ -35,7 +25,7 @@ ENDINLINE
 //ENDINLINE
 //ENDFUNCTION
 //
-//FUNCTION LoadFontFromImage: Image image, Color KEY, int firstChar  // Load font from Image 
+//FUNCTION LoadFontFromImage: Image image, Color KEY, int firstChar  // Load font from Image
 //INLINE
 //	return LIB::LoadFontFromImage(Image image, Color key, int firstChar);
 //ENDINLINE
@@ -53,7 +43,7 @@ ENDINLINE
 //ENDINLINE
 //ENDFUNCTION
 //
-//FUNCTION UnloadFont: Font font  // Unload Font from GPU memory 
+//FUNCTION UnloadFont: Font font  // Unload Font from GPU memory
 //INLINE
 //	LIB::UnloadFont(Font font);
 //ENDINLINE
@@ -68,9 +58,9 @@ INLINE
 ENDINLINE
 ENDFUNCTION
 
-FUNCTION DrawText: text$, posX, posY, fontSize, color  // Draw text 
+FUNCTION DrawText: text$, posX, posY, fontSize, color  // Draw text
 INLINE
-	LIB::DrawText(text_Str.c_str(), posX, posY, fontSize, LIB::GetColor(color));
+	LIB::DrawText(text_Str.c_str(), posX, posY, fontSize, LIB::_Color(color));
 ENDINLINE
 ENDFUNCTION
 
@@ -86,7 +76,7 @@ ENDFUNCTION
 //ENDINLINE
 //ENDFUNCTION
 //
-//FUNCTION DrawTextCodepoint: Font font, int codepoint, Vector2 position, float scale, Color tint  // Draw one character 
+//FUNCTION DrawTextCodepoint: Font font, int codepoint, Vector2 position, float scale, Color tint  // Draw one character
 //INLINE
 //	LIB::DrawTextCodepoint(Font font, int codepoint, Vector2 position, float scale, Color tint);
 //ENDINLINE
@@ -137,7 +127,7 @@ ENDFUNCTION
 //ENDINLINE
 //ENDFUNCTION
 //
-//FUNCTION char: const char *text, ...  // Text formatting with variables 
+//FUNCTION char: const char *text, ...  // Text formatting with variables
 //INLINE
 //	return LIB::char(const char *text, ...);
 //ENDINLINE
@@ -149,13 +139,13 @@ ENDFUNCTION
 //ENDINLINE
 //ENDFUNCTION
 //
-//FUNCTION *TextReplace: char *text, const char *replace, const char *by  // Replace text string 
+//FUNCTION *TextReplace: char *text, const char *replace, const char *by  // Replace text string
 //INLINE
 //	return LIB::*TextReplace(char *text, const char *replace, const char *by);
 //ENDINLINE
 //ENDFUNCTION
 //
-//FUNCTION *TextInsert: const char *text, const char *insert, int position  // Insert text in a position 
+//FUNCTION *TextInsert: const char *text, const char *insert, int position  // Insert text in a position
 //INLINE
 //	return LIB::*TextInsert(const char *text, const char *insert, int position);
 //ENDINLINE
@@ -203,20 +193,20 @@ ENDFUNCTION
 //ENDINLINE
 //ENDFUNCTION
 //
-//FUNCTION TextToInteger: const char *text  // Get integer value from text 
+//FUNCTION TextToInteger: const char *text  // Get integer value from text
 //INLINE
 //	return LIB::TextToInteger(const char *text);
 //ENDINLINE
 //ENDFUNCTION
 //
-//FUNCTION *TextToUtf8: int *codepoints, int length  // Encode text codepoint into utf8 text 
+//FUNCTION *TextToUtf8: int *codepoints, int length  // Encode text codepoint into utf8 text
 //INLINE
 //	return LIB::*TextToUtf8(int *codepoints, int length);
 //ENDINLINE
 //ENDFUNCTION
 //
 ////------------------------------
-//// UTF8 text strings management functions                                                         
+//// UTF8 text strings management functions
 ////------------------------------
 //FUNCTION *GetCodepoints: const char *text, int *count  // Get all codepoints in a string, codepoints count returned by parameters
 //INLINE
@@ -224,7 +214,7 @@ ENDFUNCTION
 //ENDINLINE
 //ENDFUNCTION
 //
-//FUNCTION GetCodepointsCount: const char *text  // Get total number of characters 
+//FUNCTION GetCodepointsCount: const char *text  // Get total number of characters
 //INLINE
 //	return LIB::GetCodepointsCount(const char *text);
 //ENDINLINE
@@ -236,7 +226,7 @@ ENDFUNCTION
 //ENDINLINE
 //ENDFUNCTION
 //
-//FUNCTION char: int codepoint, int *byteLength  // Encode codepoint into utf8 text 
+//FUNCTION char: int codepoint, int *byteLength  // Encode codepoint into utf8 text
 //INLINE
 //	return LIB::char(int codepoint, int *byteLength);
 //ENDINLINE
