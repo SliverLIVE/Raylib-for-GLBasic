@@ -1,0 +1,190 @@
+﻿// --------------------------------- //
+// Project: RayLib
+// Start: Sunday, May 03, 2020
+// IDE Version: 16.508
+
+
+INLINE
+}
+
+namespace LIB{
+	#include "raylib.h"	
+}
+
+namespace __GLBASIC__{
+ENDINLINE
+
+GLOBAL COLOR_LIGHTGRAY 	// Light Gray 
+GLOBAL COLOR_GRAY      	// Gray
+GLOBAL COLOR_DARKGRAY   // Dark Gray
+GLOBAL COLOR_YELLOW     // Yellow
+GLOBAL COLOR_GOLD       // Gold
+GLOBAL COLOR_ORANGE     // Orange
+GLOBAL COLOR_PINK       // Pink
+GLOBAL COLOR_RED        // Red
+GLOBAL COLOR_MAROON     // Maroon
+GLOBAL COLOR_GREEN      // Green
+GLOBAL COLOR_LIME       // Lime
+GLOBAL COLOR_DARKGREEN  // Dark Green
+GLOBAL COLOR_SKYBLUE    // Sky Blue
+GLOBAL COLOR_BLUE       // Blue
+GLOBAL COLOR_DARKBLUE   // Dark Blue
+GLOBAL COLOR_PURPLE     // Purple
+GLOBAL COLOR_VIOLET     // Violet
+GLOBAL COLOR_DARKPURPLE // Dark Purple
+GLOBAL COLOR_BEIGE      // Beige
+GLOBAL COLOR_BROWN      // Brown
+GLOBAL COLOR_DARKBROWN  // Dark Brown
+
+GLOBAL COLOR_WHITE      // White
+GLOBAL COLOR_BLACK      // Black
+GLOBAL COLOR_BLANK      // Blank (Transparent)
+GLOBAL COLOR_MAGENTA    // Magenta
+GLOBAL COLOR_RAYWHITE   // My own White (raylib logo)
+
+//FUNCTION NAME:
+//INLINE
+//	LIB::name();
+//ENDINLINE
+//ENDFUNCTION 
+
+
+//------------------------------------------------------------
+// Window-related functions
+//------------------------------------------------------------
+FUNCTION InitWindow: width%, height%, title$    // Initialize window and OpenGL context	
+	COLOR_LIGHTGRAY  = ColorToInt( 200, 200, 200, 255 )   	// Light Gray 
+	COLOR_GRAY       = ColorToInt( 130, 130, 130, 255 )   	// Gray
+ 	COLOR_DARKGRAY   = ColorToInt( 80, 80, 80, 255 )     	// Dark Gray
+ 	COLOR_YELLOW     = ColorToInt( 253, 249, 0, 255 )     	// Yellow
+ 	COLOR_GOLD       = ColorToInt( 255, 203, 0, 255 )     	// Gold
+ 	COLOR_ORANGE     = ColorToInt( 255, 161, 0, 255 )     	// Orange
+ 	COLOR_PINK       = ColorToInt( 255, 109, 194, 255 )   	// Pink
+ 	COLOR_RED        = ColorToInt( 230, 41, 55, 255 )     	// Red
+ 	COLOR_MAROON     = ColorToInt( 190, 33, 55, 255 )     	// Maroon
+ 	COLOR_GREEN      = ColorToInt( 0, 228, 48, 255 )      	// Green
+ 	COLOR_LIME       = ColorToInt( 0, 158, 47, 255 )      	// Lime
+ 	COLOR_DARKGREEN  = ColorToInt( 0, 117, 44, 255 )      	// Dark Green
+ 	COLOR_SKYBLUE    = ColorToInt( 102, 191, 255, 255 )   	// Sky Blue
+ 	COLOR_BLUE       = ColorToInt( 0, 121, 241, 255 )     	// Blue
+ 	COLOR_DARKBLUE   = ColorToInt( 0, 82, 172, 255 )      	// Dark Blue
+ 	COLOR_PURPLE     = ColorToInt( 200, 122, 255, 255 )   	// Purple
+ 	COLOR_VIOLET     = ColorToInt( 135, 60, 190, 255 )    	// Violet
+ 	COLOR_DARKPURPLE = ColorToInt( 112, 31, 126, 255 )    	// Dark Purple
+ 	COLOR_BEIGE      = ColorToInt( 211, 176, 131, 255 )   	// Beige
+ 	COLOR_BROWN      = ColorToInt( 127, 106, 79, 255 )    	// Brown
+ 	COLOR_DARKBROWN  = ColorToInt( 76, 63, 47, 255 )      	// Dark Brown
+
+ 	COLOR_WHITE      = ColorToInt( 255, 255, 255, 255 )   	// White
+ 	COLOR_BLACK      = ColorToInt( 0, 0, 0, 255 )         	// Black
+ 	COLOR_BLANK      = ColorToInt( 0, 0, 0, 0 )           	// Blank (Transparent)
+ 	COLOR_MAGENTA    = ColorToInt( 255, 0, 255, 255 )     	// Magenta
+ 	COLOR_RAYWHITE   = ColorToInt( 245, 245, 245, 255 )   	// My own White (raylib logo) 
+INLINE
+	LIB::InitWindow(width, height, title_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION WindowShouldClose:    // Check if KEY_ESCAPE pressed or Close icon pressed
+INLINE
+	return LIB::WindowShouldClose();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION CloseWindow:    // Close window and unload OpenGL context
+INLINE
+	LIB::CloseWindow();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsWindowReady:    // Check if window has been initialized successfully
+INLINE
+	return LIB::IsWindowReady();
+ENDINLINE
+ENDFUNCTION 
+
+FUNCTION IsWindowMinimized:    // Check if window has been minimized (or lost focus)
+INLINE
+	return LIB::IsWindowMinimized();
+ENDINLINE
+ENDFUNCTION 
+
+FUNCTION IsWindowResized:    // Check if window has been resized
+INLINE
+	return LIB::IsWindowResized();
+ENDINLINE
+ENDFUNCTION 
+
+FUNCTION IsWindowHidden:    // Check if window is currently hidden
+INLINE
+	return LIB::IsWindowHidden();
+ENDINLINE
+ENDFUNCTION 
+
+
+
+
+
+FUNCTION SetWindowTitle: title$    // Set title for window (only PLATFORM_DESKTOP)
+INLINE
+	LIB::SetWindowTitle(title_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+
+
+//------------------------------------------------------------
+// Timing-related functions
+//------------------------------------------------------------
+FUNCTION GetFPS:
+INLINE
+	return LIB::GetFPS();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SetTargetFPS: targetFPS%
+INLINE
+	LIB::SetTargetFPS(targetFPS);
+ENDINLINE
+ENDFUNCTION
+
+//------------------------------------------------------------
+// Drawing-related functions
+//------------------------------------------------------------
+FUNCTION ClearBackground: color%
+INLINE
+	LIB::ClearBackground( LIB::GetColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION BeginDrawing:
+INLINE
+	LIB::BeginDrawing();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION EndDrawing:
+INLINE
+	LIB::EndDrawing();
+ENDINLINE
+ENDFUNCTION
+
+//------------------------------------------------------------
+// Text drawing functions
+//------------------------------------------------------------
+FUNCTION DrawText: text$, posX%, posY%, fontSize%, color%
+INLINE
+	LIB::DrawText(text_Str.c_str(), posX, posY, fontSize, LIB::GetColor(color));
+ENDINLINE
+ENDFUNCTION
+
+//------------------------------------------------------------
+// Color-related functions
+//------------------------------------------------------------
+FUNCTION ColorToInt: r%, g%, b%, a%
+INLINE
+	return LIB::ColorToInt({r, g, b, a}); 
+ENDINLINE
+ENDFUNCTION
+
+ 
