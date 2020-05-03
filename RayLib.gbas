@@ -23,7 +23,7 @@ WHILE NOT WindowShouldClose()
 		ClearBackground(COLOR_LIGHTGRAY)
 		DrawText("Congrats! You created your first window!", 190, 200, 20, COLOR_RED)
 		DrawTextEx(myFont, "Oh, hi...! I'm the new Font!", 200, 250, 40, 2, COLOR_RED)
-		
+
 	EndDrawing()
 WEND
 

@@ -9,18 +9,18 @@ INLINE
 
 namespace LIB{
 	#include "raylib.h"
-	
+
 	DGArray<Color>_Color;
 	int CreateColorInstance(Color c)
 	{
 		DIMPUSH(_Color, c);
-		return LEN(_Color())-1;		
+		return LEN(_Color())-1;
 	}
 	Color GetColorInstance(int index)
 	{
 		return _Color(index);
 	}
-	
+
 	DGArray<Font>_Font;
 	int CreateFontInstance(Font f)
 	{
@@ -30,7 +30,7 @@ namespace LIB{
 	Font GetFontInstance(int index)
 	{
 		return _Font(index);
-	}	
+	}
 }
 
 namespace __GLBASIC__{
@@ -43,21 +43,21 @@ ENDSUB
 FUNCTION ColorInstance: r, g, b, a
 	INLINE
 		LIB::Color color;
-		
+
 		color.r = r;
 		color.g = g;
 		color.b = b;
-		color.a = a;		
+		color.a = a;
 		return LIB::CreateColorInstance(color);
 	ENDINLINE
-ENDFUNCTION 
+ENDFUNCTION
 
 FUNCTION FontInstance:
 INLINE
 	LIB::Font font;
 	return LIB::CreateFontInstance(font);
 ENDINLINE
-ENDFUNCTION 
+ENDFUNCTION
 
 
 
@@ -1239,4 +1239,4 @@ ENDSUB
 //INLINE
 //	LIB::GenTextureMipmaps(&LIB::_Font(font).texture);
 //ENDINLINE
-//ENDFUNCTION 
+//ENDFUNCTION
