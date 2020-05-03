@@ -1,0 +1,990 @@
+﻿// --------------------------------- //
+// Project: RayLib
+// Start: Sunday, May 03, 2020
+// IDE Version: 16.508
+
+
+INLINE
+}
+
+namespace LIB{
+	#include "raylib.h"
+}
+
+namespace __GLBASIC__{
+ENDINLINE
+
+GLOBAL COLOR_LIGHTGRAY 	// Light Gray
+GLOBAL COLOR_GRAY      	// Gray
+GLOBAL COLOR_DARKGRAY   // Dark Gray
+GLOBAL COLOR_YELLOW     // Yellow
+GLOBAL COLOR_GOLD       // Gold
+GLOBAL COLOR_ORANGE     // Orange
+GLOBAL COLOR_PINK       // Pink
+GLOBAL COLOR_RED        // Red
+GLOBAL COLOR_MAROON     // Maroon
+GLOBAL COLOR_GREEN      // Green
+GLOBAL COLOR_LIME       // Lime
+GLOBAL COLOR_DARKGREEN  // Dark Green
+GLOBAL COLOR_SKYBLUE    // Sky Blue
+GLOBAL COLOR_BLUE       // Blue
+GLOBAL COLOR_DARKBLUE   // Dark Blue
+GLOBAL COLOR_PURPLE     // Purple
+GLOBAL COLOR_VIOLET     // Violet
+GLOBAL COLOR_DARKPURPLE // Dark Purple
+GLOBAL COLOR_BEIGE      // Beige
+GLOBAL COLOR_BROWN      // Brown
+GLOBAL COLOR_DARKBROWN  // Dark Brown
+
+GLOBAL COLOR_WHITE      // White
+GLOBAL COLOR_BLACK      // Black
+GLOBAL COLOR_BLANK      // Blank (Transparent)
+GLOBAL COLOR_MAGENTA    // Magenta
+GLOBAL COLOR_RAYWHITE   // My own White (raylib logo)
+
+//------------------------------
+// Window-related functions
+//------------------------------
+FUNCTION InitWindow: width, height, title$  // Initialize window and OpenGL context
+	COLOR_LIGHTGRAY  = ColorToInt( 200, 200, 200, 255 )   	// Light Gray
+	COLOR_GRAY       = ColorToInt( 130, 130, 130, 255 )   	// Gray
+ 	COLOR_DARKGRAY   = ColorToInt( 80, 80, 80, 255 )     	// Dark Gray
+ 	COLOR_YELLOW     = ColorToInt( 253, 249, 0, 255 )     	// Yellow
+ 	COLOR_GOLD       = ColorToInt( 255, 203, 0, 255 )     	// Gold
+ 	COLOR_ORANGE     = ColorToInt( 255, 161, 0, 255 )     	// Orange
+ 	COLOR_PINK       = ColorToInt( 255, 109, 194, 255 )   	// Pink
+ 	COLOR_RED        = ColorToInt( 230, 41, 55, 255 )     	// Red
+ 	COLOR_MAROON     = ColorToInt( 190, 33, 55, 255 )     	// Maroon
+ 	COLOR_GREEN      = ColorToInt( 0, 228, 48, 255 )      	// Green
+ 	COLOR_LIME       = ColorToInt( 0, 158, 47, 255 )      	// Lime
+ 	COLOR_DARKGREEN  = ColorToInt( 0, 117, 44, 255 )      	// Dark Green
+ 	COLOR_SKYBLUE    = ColorToInt( 102, 191, 255, 255 )   	// Sky Blue
+ 	COLOR_BLUE       = ColorToInt( 0, 121, 241, 255 )     	// Blue
+ 	COLOR_DARKBLUE   = ColorToInt( 0, 82, 172, 255 )      	// Dark Blue
+ 	COLOR_PURPLE     = ColorToInt( 200, 122, 255, 255 )   	// Purple
+ 	COLOR_VIOLET     = ColorToInt( 135, 60, 190, 255 )    	// Violet
+ 	COLOR_DARKPURPLE = ColorToInt( 112, 31, 126, 255 )    	// Dark Purple
+ 	COLOR_BEIGE      = ColorToInt( 211, 176, 131, 255 )   	// Beige
+ 	COLOR_BROWN      = ColorToInt( 127, 106, 79, 255 )    	// Brown
+ 	COLOR_DARKBROWN  = ColorToInt( 76, 63, 47, 255 )      	// Dark Brown
+
+ 	COLOR_WHITE      = ColorToInt( 255, 255, 255, 255 )   	// White
+ 	COLOR_BLACK      = ColorToInt( 0, 0, 0, 255 )         	// Black
+ 	COLOR_BLANK      = ColorToInt( 0, 0, 0, 0 )           	// Blank (Transparent)
+ 	COLOR_MAGENTA    = ColorToInt( 255, 0, 255, 255 )     	// Magenta
+ 	COLOR_RAYWHITE   = ColorToInt( 245, 245, 245, 255 )   	// My own White (raylib logo)
+INLINE
+	LIB::InitWindow(width, height, title_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION WindowShouldClose: // Check if KEY_ESCAPE pressed or Close icon pressed
+INLINE
+	return LIB::WindowShouldClose();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION CloseWindow:  // Close window and unload OpenGL context
+INLINE
+	LIB::CloseWindow();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsWindowReady:  // Check if window has been initialized successfully
+INLINE
+	return LIB::IsWindowReady();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsWindowMinimized:  // Check if window has been minimized
+INLINE
+	return LIB::IsWindowMinimized();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsWindowResized:  // Check if window has been resized
+INLINE
+	return LIB::IsWindowResized();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsWindowHidden:  // Check if window is currently hidden
+INLINE
+	return LIB::IsWindowHidden();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsWindowFullscreen:  // Check if window is currently fullscreen
+INLINE
+	return LIB::IsWindowFullscreen();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION ToggleFullscreen:  // Toggle fullscreen mode
+INLINE
+	LIB::ToggleFullscreen();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION UnhideWindow:  // Show the window
+INLINE
+	LIB::UnhideWindow();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION HideWindow:  // Hide the window
+INLINE
+	LIB::HideWindow();
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION SetWindowIcon: Image image  // Set icon for window
+//INLINE
+//	LIB::SetWindowIcon(Image image);
+//ENDINLINE
+//ENDFUNCTION
+
+FUNCTION SetWindowTitle: title$  // Set title for window
+INLINE
+	LIB::SetWindowTitle(title_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SetWindowPosition: x, y  // Set window position on screen
+INLINE
+	LIB::SetWindowPosition(x, y);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SetWindowMonitor: monitor  // Set monitor for the current window
+INLINE
+	LIB::SetWindowMonitor(monitor);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SetWindowMinSize: width, height  // Set window minimum dimensions
+INLINE
+	LIB::SetWindowMinSize(width, height);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SetWindowSize: width, height  // Set window dimensions
+INLINE
+	LIB::SetWindowSize(width, height);
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION *GetWindowHandle: void  // Get native window handle
+//INLINE
+//	LIB::*GetWindowHandle(void);
+//ENDINLINE
+//ENDFUNCTION
+
+FUNCTION GetScreenWidth:  // Get current screen width
+INLINE
+	return LIB::GetScreenWidth();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetScreenHeight:  // Get current screen height
+INLINE
+	return LIB::GetScreenHeight();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetMonitorCount:  // Get number of connected monitors
+INLINE
+	return LIB::GetMonitorCount();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetMonitorWidth: monitor  // Get primary monitor width
+INLINE
+	return LIB::GetMonitorWidth(monitor);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetMonitorHeight: monitor  // Get primary monitor height
+INLINE
+	return LIB::GetMonitorHeight(monitor);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetMonitorPhysicalWidth: monitor  // Get primary monitor physical width in millimetres
+INLINE
+	return LIB::GetMonitorPhysicalWidth(monitor);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetMonitorPhysicalHeight: monitor  // Get primary monitor physical height in millimetres
+INLINE
+	return LIB::GetMonitorPhysicalHeight(monitor);
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION GetWindowPosition: void  // Get window position XY on monitor
+//INLINE
+//	return LIB::GetWindowPosition(void);
+//ENDINLINE
+//ENDFUNCTION
+
+FUNCTION GetMonitorName$:monitor  // Get the human-readable, UTF-8 encoded name of the primary monitor
+INLINE
+	return LIB::GetMonitorName(monitor);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetClipboardText$:  // Get clipboard text content
+INLINE
+	return LIB::GetClipboardText();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SetClipboardText: text$  // Set clipboard text content
+INLINE
+	LIB::SetClipboardText(text_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+//------------------------------
+// Cursor-related functions
+//------------------------------
+FUNCTION ShowCursor:  // Shows cursor
+INLINE
+	LIB::ShowCursor();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION HideCursor:  // Hides cursor
+INLINE
+	LIB::HideCursor();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsCursorHidden:  // Check if cursor is not visible
+INLINE
+	return LIB::IsCursorHidden();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION EnableCursor:  // Enables cursor
+INLINE
+	LIB::EnableCursor();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION DisableCursor:  // Disables cursor
+INLINE
+	LIB::DisableCursor();
+ENDINLINE
+ENDFUNCTION
+
+//------------------------------
+// Drawing-related functions
+//------------------------------
+FUNCTION ClearBackground: color  // Set background color
+INLINE
+	LIB::ClearBackground(LIB::GetColor(color));
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION BeginDrawing:  // Setup canvas
+INLINE
+	LIB::BeginDrawing();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION EndDrawing:  // End canvas drawing and swap buffers
+INLINE
+	LIB::EndDrawing();
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION BeginMode2D: Camera2D camera  // Initialize 2D mode with custom camera
+//INLINE
+//	LIB::BeginMode2D(Camera2D camera);
+//ENDINLINE
+//ENDFUNCTION
+
+FUNCTION EndMode2D:  // Ends 2D mode with custom camera
+INLINE
+	LIB::EndMode2D();
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION BeginMode3D: Camera3D camera  // Initializes 3D mode with custom camera
+//INLINE
+//	LIB::BeginMode3D(Camera3D camera);
+//ENDINLINE
+//ENDFUNCTION
+
+FUNCTION EndMode3D:  // Ends 3D mode and returns to default 2D orthographic mode
+INLINE
+	LIB::EndMode3D();
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION BeginTextureMode: RenderTexture2D target  // Initializes render texture for drawing
+//INLINE
+//	LIB::BeginTextureMode(RenderTexture2D target);
+//ENDINLINE
+//ENDFUNCTION
+
+FUNCTION EndTextureMode:  // Ends drawing to render texture
+INLINE
+	LIB::EndTextureMode();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION BeginScissorMode: x, y, width, height  // Begin scissor mode
+INLINE
+	LIB::BeginScissorMode(x, y, width, height);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION EndScissorMode:  // End scissor mode
+INLINE
+	LIB::EndScissorMode();
+ENDINLINE
+ENDFUNCTION
+
+////------------------------------
+//// Screen-space-related functions
+////------------------------------
+//FUNCTION GetMouseRay: Vector2 mousePosition, Camera camera  // Returns a ray trace from mouse position
+//INLINE
+//	return LIB::GetMouseRay(Vector2 mousePosition, Camera camera);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GetCameraMatrix: Camera camera  // Returns camera transform matrix
+//INLINE
+//	return LIB::GetCameraMatrix(Camera camera);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GetCameraMatrix2D: Camera2D camera  // Returns camera 2d transform matrix
+//INLINE
+//	return LIB::GetCameraMatrix2D(Camera2D camera);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GetWorldToScreen: Vector3 position, Camera camera  // Returns the screen space position for a 3d world space position
+//INLINE
+//	return LIB::GetWorldToScreen(Vector3 position, Camera camera);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GetWorldToScreenEx: Vector3 position, Camera camera,int width, int height  // Returns size position for a 3d world space position
+//INLINE
+//	return LIB::GetWorldToScreenEx(Vector3 position, Camera camera,int width, int height);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GetWorldToScreen2D: Vector2 position, Camera2D camera  // Returns the screen space position for a 2d camera world space position
+//INLINE
+//	return LIB::GetWorldToScreen2D(Vector2 position, Camera2D camera);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GetScreenToWorld2D: Vector2 position, Camera2D camera  // Returns the world space position for a 2d camera screen space position
+//INLINE
+//	return LIB::GetScreenToWorld2D(Vector2 position, Camera2D camera);
+//ENDINLINE
+//ENDFUNCTION
+//
+////------------------------------
+//// Timing-related functions
+////------------------------------
+FUNCTION SetTargetFPS: fps  // Set target FPS
+INLINE
+	LIB::SetTargetFPS(fps);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetFPS:  // Returns current FPS
+INLINE
+	return LIB::GetFPS();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetFrameTime:  // Returns time in seconds for last frame drawn
+INLINE
+	return LIB::GetFrameTime();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetTime:  // Returns elapsed time in seconds since InitWindow
+INLINE
+	return LIB::GetTime();
+ENDINLINE
+ENDFUNCTION
+
+////------------------------------
+//// Color-related functions
+////------------------------------
+FUNCTION ColorToInt: r, g, b, a  // Returns hexadecimal value for a Color
+INLINE
+	return LIB::ColorToInt({r, g, b, a});
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION ColorNormalize: Color color  // Returns color normalized as float [0..1]
+//INLINE
+//	return LIB::ColorNormalize(Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION ColorFromNormalized: Vector4 normalized  // Returns color from normalized values [0..1]
+//INLINE
+//	return LIB::ColorFromNormalized(Vector4 normalized);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION ColorToHSV: Color color  // Returns HSV values for a Color
+//INLINE
+//	return LIB::ColorToHSV(Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION ColorFromHSV: Vector3 hsv  // Returns a Color from HSV values
+//INLINE
+//	return LIB::ColorFromHSV(Vector3 hsv);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GetColor: int hexValue  // Returns a Color struct from hexadecimal value
+//INLINE
+//	return LIB::GetColor(int hexValue);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION Fade: Color color, float alpha  // Color fade-in or fade-out, alpha goes from 0.0f to 1.0f
+//INLINE
+//	return LIB::Fade(Color color, float alpha);
+//ENDINLINE
+//ENDFUNCTION
+//
+////------------------------------
+//// Misc. functions
+////------------------------------
+FUNCTION SetConfigFlags: flags  // Setup window configuration flags
+INLINE
+	LIB::SetConfigFlags(flags);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SetTraceLogLevel: logType  // Set the current threshold
+INLINE
+	LIB::SetTraceLogLevel(logType);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SetTraceLogExit: logType  // Set the exit threshold
+INLINE
+	LIB::SetTraceLogExit(logType);
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION SetTraceLogCallback: TraceLogCallback CALLBACK  // Set a trace log callback to enable custom logging
+//INLINE
+//	LIB::SetTraceLogCallback(TraceLogCallback callback);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION TraceLog: int logType, const char *text, ...  // Show trace log messages
+//INLINE
+//	LIB::TraceLog(int logType, const char *text, ...);
+//ENDINLINE
+//ENDFUNCTION
+
+FUNCTION TakeScreenshot: fileName$  // Takes a screenshot of current screen
+INLINE
+	LIB::TakeScreenshot(fileName_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetRandomValue: valMIN, valMAX  // Returns a random value between min and max
+INLINE
+	return LIB::GetRandomValue(valMIN, valMAX);
+ENDINLINE
+ENDFUNCTION
+
+////------------------------------
+//// Files management functions
+////------------------------------
+FUNCTION LoadFileData$: fileName$, BYREF bytesRead  // Load file data as byte array
+INLINE
+	unsigned int bytesread;
+	unsigned char* result;
+	result =  LIB::LoadFileData(fileName_Str.c_str(), &bytesread);
+	bytesRead = bytesread;
+	return (const char*)result;
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SaveFileData: fileName$, data$, bytesToWrite  // Save data to file from byte array
+INLINE
+	LIB::SaveFileData(fileName_Str.c_str(), (void*)data_Str.c_str(), bytesToWrite);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION LoadFileText$: fileName$  // Load text data from file
+INLINE
+	return LIB::LoadFileText(fileName_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SaveFileText: fileName$, text$  // Save text data to file
+INLINE
+	LIB::SaveFileText(fileName_Str.c_str(), (char*)text_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION FileExists: fileName$  // Check if file exists
+INLINE
+	return LIB::FileExists(fileName_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsFileExtension: fileName$, ext$  // Check file extension
+INLINE
+	return LIB::IsFileExtension(fileName_Str.c_str(), ext_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION DirectoryExists: dirPath$  // Check if a directory path exists
+INLINE
+	return LIB::DirectoryExists(dirPath_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetExtension$: fileName$  // Get pointer to extension for a filename string
+INLINE
+	return LIB::GetExtension(fileName_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetFileName$: filePath$  // Get pointer to filename for a path string
+INLINE
+	return LIB::GetFileName(filePath_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetFileNameWithoutExt$: filePath$  // Get filename string without extension
+INLINE
+	return LIB::GetFileNameWithoutExt(filePath_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetDirectoryPath$: filePath$  // Get full path for a given fileName with path
+INLINE
+	return LIB::GetDirectoryPath(filePath_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetPrevDirectoryPath$: dirPath$  // Get previous directory path for a given path
+INLINE
+	return LIB::GetPrevDirectoryPath(dirPath_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetWorkingDirectory$:  // Get current working directory
+INLINE
+	return LIB::GetWorkingDirectory();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetDirectoryFiles: dirPath$, BYREF count, result$[]  // Get filenames in a directory path
+INLINE
+	int fileCount;
+	char** files;
+
+	files = LIB::GetDirectoryFiles(dirPath_Str.c_str(), &fileCount);
+
+	DIM(result_Str, fileCount);
+	for(int i = 0; i<fileCount; i++)
+	{
+		result_Str(i) = files[i]; // arrays in GLBasic are allways be a reference in functions!
+	}
+	count = fileCount;
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION ClearDirectoryFiles:  // Clear directory files paths buffers
+INLINE
+	LIB::ClearDirectoryFiles();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION ChangeDirectory: dir$  // Change working directory, returns true if success
+INLINE
+	return LIB::ChangeDirectory(dir_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsFileDropped:  // Check if a file has been dropped into window
+INLINE
+	return LIB::IsFileDropped();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetDroppedFiles: BYREF count, result$[]  // Get dropped files names
+INLINE
+	int fileCount;
+	char** files;
+	files =  LIB::GetDroppedFiles(&fileCount);
+
+	DIM(result_Str, fileCount);
+	for(int i = 0; i<fileCount; i++)
+	{
+		result_Str(i) = files[i]; // arrays in GLBasic are allways be a reference in functions!
+	}
+	count = fileCount;
+
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION ClearDroppedFiles:  // Clear dropped files paths buffer
+INLINE
+	LIB::ClearDroppedFiles();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetFileModTime: fileName$  // Get file modification time
+INLINE
+	return LIB::GetFileModTime(fileName_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION CompressData$: data$, dataLength, BYREF compDataLength  // Compress data
+INLINE
+	int compdatalength;
+	unsigned char* result;
+	result =  LIB::CompressData((unsigned char*)data_Str.c_str(), dataLength, &compdatalength);
+	compDataLength = compdatalength;
+	return (const char*)result;
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION DecompressData$: compData$, compDataLength, BYREF dataLength  // Decompress data
+INLINE
+	int datalength;
+	unsigned char* result;
+	result =  LIB::DecompressData((unsigned char*)compData_Str.c_str(), compDataLength, &datalength);
+	dataLength = datalength;
+	return (const char*)result;
+ENDINLINE
+ENDFUNCTION
+
+////------------------------------
+//// Persistent storage management
+////------------------------------
+FUNCTION LoadStorageValue: position  // Load integer value from storage file
+INLINE
+	return LIB::LoadStorageValue(position);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SaveStorageValue: position, value  // Save integer value to storage file
+INLINE
+	LIB::SaveStorageValue(position, value);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION OpenURL: url$  // Open URL with default system browser
+INLINE
+	LIB::OpenURL(url_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+////------------------------------
+//// Input Handling Functions
+////------------------------------
+////------------------------------
+//// Input-related functions: keyb
+////------------------------------
+FUNCTION IsKeyPressed: inkey  // Detect if a key has been pressed once
+INLINE
+	return LIB::IsKeyPressed(inkey);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsKeyDown: inkey  // Detect if a key is being pressed
+INLINE
+	return LIB::IsKeyDown(inkey);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsKeyReleased: inkey  // Detect if a key has been released once
+INLINE
+	return LIB::IsKeyReleased(inkey);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsKeyUp: inkey  // Detect if a key is NOT being pressed
+INLINE
+	return LIB::IsKeyUp(inkey);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetKeyPressed:   // Get latest key pressed
+INLINE
+	return LIB::GetKeyPressed();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SetExitKey: inkey // Set a custom key to exit program
+INLINE
+	LIB::SetExitKey(inkey);
+ENDINLINE
+ENDFUNCTION
+
+////------------------------------
+//// Input-related functions: gamepads
+////------------------------------
+FUNCTION IsGamepadAvailable: gamepad  // Detect if a gamepad is available
+INLINE
+	return LIB::IsGamepadAvailable(gamepad);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsGamepadName: gamepad, name$  // Check gamepad name
+INLINE
+	return LIB::IsGamepadName(gamepad, name_Str.c_str());
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetGamepadName$: gamepad  // Return gamepad internal name id
+INLINE
+	return LIB::GetGamepadName(gamepad);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsGamepadButtonPressed: gamepad, button  // Detect if a gamepad button has been pressed once
+INLINE
+	return LIB::IsGamepadButtonPressed(gamepad, button);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsGamepadButtonDown: gamepad, button  // Detect if a gamepad button is being pressed
+INLINE
+	return LIB::IsGamepadButtonDown(gamepad, button);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsGamepadButtonReleased: gamepad, button  // Detect if a gamepad button has been released once
+INLINE
+	return LIB::IsGamepadButtonReleased(gamepad, button);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsGamepadButtonUp: gamepad, button  // Detect if a gamepad button is NOT being pressed
+INLINE
+	return LIB::IsGamepadButtonUp(gamepad, button);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetGamepadButtonPressed:  // Get the last gamepad button pressed
+INLINE
+	return LIB::GetGamepadButtonPressed();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetGamepadAxisCount: gamepad  // Return gamepad axis count for a gamepad
+INLINE
+	return LIB::GetGamepadAxisCount(gamepad);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetGamepadAxisMovement#: gamepad, axis  // Return axis movement value for a gamepad axis
+INLINE
+	return LIB::GetGamepadAxisMovement(gamepad, axis);
+ENDINLINE
+ENDFUNCTION
+
+////------------------------------
+//// Input-related functions: mouse
+////------------------------------
+FUNCTION IsMouseButtonPressed: button  // Detect if a mouse button has been pressed once
+INLINE
+	return LIB::IsMouseButtonPressed(button);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsMouseButtonDown: button  // Detect if a mouse button is being pressed
+INLINE
+	return LIB::IsMouseButtonDown(button);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsMouseButtonReleased: button  // Detect if a mouse button has been released once
+INLINE
+	return LIB::IsMouseButtonReleased(button);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsMouseButtonUp: button  // Detect if a mouse button is NOT being pressed
+INLINE
+	return LIB::IsMouseButtonUp(button);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetMouseX:  // Returns mouse position X
+INLINE
+	return LIB::GetMouseX();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetMouseY:  // Returns mouse position Y
+INLINE
+	return LIB::GetMouseY();
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION GetMousePosition: void  // Returns mouse position XY
+//INLINE
+//	return LIB::GetMousePosition(void);
+//ENDINLINE
+//ENDFUNCTION
+//
+FUNCTION SetMousePosition: x, y  // Set mouse position XY
+INLINE
+	LIB::SetMousePosition(x, y);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SetMouseOffset: offsetX, offsetY  // Set mouse offset
+INLINE
+	LIB::SetMouseOffset(offsetX, offsetY);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SetMouseScale: scaleX#, scaleY#  // Set mouse scaling
+INLINE
+	LIB::SetMouseScale(scaleX, scaleY);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetMouseWheelMove:  // Returns mouse wheel movement Y
+INLINE
+	return LIB::GetMouseWheelMove();
+ENDINLINE
+ENDFUNCTION
+
+////------------------------------
+//// Input-related functions: touch
+////------------------------------
+FUNCTION GetTouchX:  // Returns touch position X for touch point 0
+INLINE
+	return LIB::GetTouchX();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetTouchY:  // Returns touch position Y for touch point 0
+INLINE
+	return LIB::GetTouchY();
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION GetTouchPosition: int index  // Returns touch position XY for a touch point index
+//INLINE
+//	return LIB::GetTouchPosition(int index);
+//ENDINLINE
+//ENDFUNCTION
+//
+////------------------------------
+//// Gestures and Touch Handling Functions (Module: gestures)
+////------------------------------
+FUNCTION SetGesturesEnabled: gestureFlags  // Enable a set of gestures using flags
+INLINE
+	LIB::SetGesturesEnabled((unsigned int)gestureFlags);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION IsGestureDetected: gesture  // Check if a gesture have been detected
+INLINE
+	return LIB::IsGestureDetected(gesture);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetGestureDetected:  // Get latest detected gesture
+INLINE
+	return LIB::GetGestureDetected();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetTouchPointsCount:  // Get touch points count
+INLINE
+	return LIB::GetTouchPointsCount();
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION GetGestureHoldDuration#:  // Get gesture hold time in milliseconds
+INLINE
+	return LIB::GetGestureHoldDuration();
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION GetGestureDragVector: void  // Get gesture drag vector
+//INLINE
+//	return LIB::GetGestureDragVector(void);
+//ENDINLINE
+//ENDFUNCTION
+//
+FUNCTION GetGestureDragAngle:  // Get gesture drag angle
+INLINE
+	return LIB::GetGestureDragAngle();
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION GetGesturePinchVector: void  // Get gesture pinch delta
+//INLINE
+//	return LIB::GetGesturePinchVector(void);
+//ENDINLINE
+//ENDFUNCTION
+//
+FUNCTION GetGesturePinchAngle#:  // Get gesture pinch angle
+INLINE
+	return LIB::GetGesturePinchAngle();
+ENDINLINE
+ENDFUNCTION
+
+////------------------------------
+//// Camera System Functions (Module: camera)
+////------------------------------
+//FUNCTION SetCameraMode: Camera camera, int mode  // Set camera mode
+//INLINE
+//	LIB::SetCameraMode(Camera camera, int mode);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION UpdateCamera: Camera *camera  // Update camera position for selected mode
+//INLINE
+//	LIB::UpdateCamera(Camera *camera);
+//ENDINLINE
+//ENDFUNCTION
+
+FUNCTION SetCameraPanControl: panKey  // Set camera pan key to combine with mouse movement
+INLINE
+	LIB::SetCameraPanControl(panKey);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SetCameraAltControl: altKey  // Set camera alt key to combine with mouse movement
+INLINE
+	LIB::SetCameraAltControl(altKey);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SetCameraSmoothZoomControl: szKey  // Set camera smooth zoom key to combine with mouse
+INLINE
+	LIB::SetCameraSmoothZoomControl(szKey);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION SetCameraMoveControls: frontKey, backKey, rightKey, leftKey, upKey, downKey  // Set camera move controls   1st person and 3rd person cameras
+INLINE
+	LIB::SetCameraMoveControls(frontKey, backKey, rightKey, leftKey, upKey, downKey);
+ENDINLINE
+ENDFUNCTION

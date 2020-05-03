@@ -1,0 +1,22 @@
+﻿// --------------------------------- //
+// Project: RayLib
+// Start: Sunday, May 03, 2020
+// IDE Version: 16.508
+
+LOCAL Title$ = "Raylib for GLBasic!"
+
+InitWindow(800,600, Title$)
+SetTargetFPS(60)
+
+WHILE NOT WindowShouldClose()
+	
+	BeginDrawing()
+	
+		DrawFPS(20,20)
+		
+		ClearBackground(COLOR_SKYBLUE)
+		DrawText("Congrats! You created your first window!", 190, 200, 20, COLOR_RAYWHITE)
+	EndDrawing()
+WEND
+
+CloseWindow()
