@@ -1,5 +1,0 @@
-raylib.h:
-Copy to: -> Steam\steamapps\common\GLBasic_SDK\Compiler\platform\Include
-
-libraylib.a:
-Copy to: -> Steam\steamapps\common\GLBasic_SDK\Compiler\platform\Win32\lib
