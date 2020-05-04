@@ -28,6 +28,18 @@ TYPE RL_Color
 	FUNCTION Set: r%, g%, b%, a%
 		self.r = r; self.g = g; self.b = b; self.a = a
 	ENDFUNCTION
+
+	FUNCTION SetRGBA: hexColor, alpha = 255
+		self.r = bAND(hexColor,0xff)
+		self.g = bAND(hexColor/0x100,0xff)
+		self.b = bAND(hexColor/0x10000,0xff)
+		self.a = alpha
+	ENDFUNCTION
+
+	FUNCTION SetAlpha: alpha
+		self.a = alpha
+	ENDFUNCTION
+
 ENDTYPE
 
 TYPE RL_Rectangle
@@ -77,3 +89,25 @@ TYPE RL_Font
 	chars[] AS RL_CharInfo		// ref to CharInfo as ARRAY
 ENDTYPE
 
+TYPE RL_Camera3D			// <-- the same as Camera
+	position AS RL_Vector3
+	target AS RL_Vector3
+	up AS RL_Vector3
+	fovy#
+	_type%					// int. Name should "type"... but GLB will not let me
+ENDTYPE
+
+TYPE RL_Camera2D
+	offset AS RL_Vector2
+	target AS RL_Vector2
+	rotation#
+	zoom#
+ENDTYPE
+
+TYPE RL_Wave
+	sampleCount%
+	sampleRate%
+	sampleSize%
+	channels%
+	data$			// should be void*
+ENDTYPE

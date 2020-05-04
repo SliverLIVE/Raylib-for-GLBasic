@@ -11,7 +11,7 @@ INLINE
 namespace LIB{
 	#include "raylib.h"
 }
-	
+
 	RL_Vector2 RaylibVector2_to_GLBasicVector2(LIB::Vector2 *v2)
 	{
 		RL_Vector2 vec2;
@@ -19,15 +19,15 @@ namespace LIB{
 		vec2.y = v2->y;
 		return vec2;
 	}
-	
-	LIB::Vector2 GLBasicColor_to_RaylibColor(RL_Vector2 v2)
+
+	LIB::Vector2 GLBasicVector2_to_RaylibVector2(RL_Vector2 v2)
 	{
 		LIB::Vector2 vec2;
 		vec2.x = v2.x;
 		vec2.y = v2.y;
-		return vec2;				
+		return vec2;
 	}
-	
+
 	RL_Color RaylibColor_to_GLBasicColor(LIB::Color *c)
 	{
 		RL_Color col;
@@ -127,12 +127,62 @@ namespace LIB{
 		return fnt;
 	}
 
+	
+	RL_Image RaylibImage_to_GLBasicImage(LIB::Image *i)
+	{
+		RL_Image img;
+		
+		img.data_Str 	= (const char*)i->data;
+		img.width 		= i->width;
+		img.height 		= i->height;
+		img.mipmaps 	= i->mipmaps;
+		img.format		= i->format;
+		
+		return img;
+	}
+	
+	LIB::Image GLBasicImage_to_RaylibImage(RL_Image i)
+	{
+		LIB::Image img;
+		
+		img.data 		= (void*)i.data_Str;
+		img.width 		= i.width;
+		img.height 		= i.height;
+		img.mipmaps 	= i.mipmaps;
+		img.format		= i.format;
+		
+		return img;
+	}
+
+	
+	RL_Texture2D RaylibTexture2D_to_GLBasicTexture2D(LIB::Texture2D *t)
+	{
+		RL_Texture2D tex;
+		
+		tex.id 			= t->id;
+		tex.width 		= t->width;
+		tex.height 		= t->height;
+		tex.mipmaps 	= t->mipmaps;
+		tex.format		= t->format;
+		
+		return tex;
+	}
+	
+	LIB::Texture2D GLBasicTexture2D_to_RaylibTexture2D(RL_Texture2D t)
+	{
+		LIB::Texture2D tex;
+		
+		tex.id 			= t.id;
+		tex.width 		= t.width;
+		tex.height 		= t.height;
+		tex.mipmaps 	= t.mipmaps;
+		tex.format		= t.format;
+		
+		return tex;
+	}
+
 namespace __GLBASIC__{
 ENDINLINE
-
-SUB __RAYLIB_STRUCT_WRAPPERS:
-	// JUST FOR QUICKJUMPING IN SOURCE!
-ENDSUB
 
 SUB _RAYLIB_CORE:
 	// JUST FOR QUICKJUMPING IN SOURCE!
@@ -535,9 +585,9 @@ FUNCTION RL_Fade: _color AS RL_Color, alpha#  // Color fade-in or fade-out, alph
 INLINE
 	LIB::Color c;
 	c = GLBasicColor_to_RaylibColor(_color);
-	
+
 	c =  LIB::Fade(c, (float)alpha);
-	
+
 	_color = RaylibColor_to_GLBasicColor(&c);
 ENDINLINE
 ENDFUNCTION
@@ -919,12 +969,14 @@ INLINE
 ENDINLINE
 ENDFUNCTION
 
-//FUNCTION RL_GetMousePosition: void  // Returns mouse position XY
-//INLINE
-//	return LIB::GetMousePosition(void);
-//ENDINLINE
-//ENDFUNCTION
-//
+FUNCTION RL_GetMousePosition AS RL_Vector2:  // Returns mouse position XY
+INLINE
+	LIB::Vector2 vec;
+	vec = LIB::GetMousePosition();
+	return RaylibVector2_to_GLBasicVector2(&vec);
+ENDINLINE
+ENDFUNCTION
+
 FUNCTION RL_SetMousePosition: x, y  // Set mouse position XY
 INLINE
 	LIB::SetMousePosition(x, y);
@@ -964,12 +1016,14 @@ INLINE
 ENDINLINE
 ENDFUNCTION
 
-//FUNCTION RL_GetTouchPosition: int index  // Returns touch position XY for a touch point index
-//INLINE
-//	return LIB::GetTouchPosition(int index);
-//ENDINLINE
-//ENDFUNCTION
-//
+FUNCTION RL_GetTouchPosition AS RL_Vector2: index  // Returns touch position XY for a touch point index
+INLINE
+	LIB::Vector2 vec;
+	vec =  LIB::GetTouchPosition(index);
+	return RaylibVector2_to_GLBasicVector2(&vec);
+ENDINLINE
+ENDFUNCTION
+
 ////------------------------------
 //// Gestures and Touch Handling Functions (Module: gestures)
 ////------------------------------
@@ -1003,24 +1057,28 @@ INLINE
 ENDINLINE
 ENDFUNCTION
 
-//FUNCTION GetGestureDragVector: void  // Get gesture drag vector
-//INLINE
-//	return LIB::GetGestureDragVector(void);
-//ENDINLINE
-//ENDFUNCTION
-//
+FUNCTION GetGestureDragVector AS RL_Vector2:  // Get gesture drag vector
+INLINE
+	LIB::Vector2 vec;
+	vec =  LIB::GetGestureDragVector();
+	return RaylibVector2_to_GLBasicVector2(&vec);
+ENDINLINE
+ENDFUNCTION
+
 FUNCTION RL_GetGestureDragAngle:  // Get gesture drag angle
 INLINE
 	return LIB::GetGestureDragAngle();
 ENDINLINE
 ENDFUNCTION
 
-//FUNCTION RL_GetGesturePinchVector: void  // Get gesture pinch delta
-//INLINE
-//	return LIB::GetGesturePinchVector(void);
-//ENDINLINE
-//ENDFUNCTION
-//
+FUNCTION RL_GetGesturePinchVector AS RL_Vector2:   // Get gesture pinch delta
+INLINE
+	LIB::Vector2 vec;
+	vec =  LIB::GetGesturePinchVector();
+	return RaylibVector2_to_GLBasicVector2(&vec);
+ENDINLINE
+ENDFUNCTION
+
 FUNCTION RL_GetGesturePinchAngle#:  // Get gesture pinch angle
 INLINE
 	return LIB::GetGesturePinchAngle();
@@ -1065,6 +1123,527 @@ INLINE
 	LIB::SetCameraMoveControls(frontKey, backKey, rightKey, leftKey, upKey, downKey);
 ENDINLINE
 ENDFUNCTION
+
+
+
+
+
+
+SUB _RAYLIB_TEXTURES:
+ENDSUB
+
+////------------------------------
+//// Image loading functions
+////------------------------------
+////------------------------------
+//// NOTE: This functions do not require GPU access
+////------------------------------
+FUNCTION RL_LoadImage AS RL_Image: fileName$  // Load image from file into CPU memory 
+INLINE
+	LIB::Image img;
+	img =  LIB::LoadImage(fileName_Str.c_str());
+	return RaylibImage_to_GLBasicImage(&img);
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION LoadImageEx: Color *pixels, int width, int height  // Load image from Color array data 
+//INLINE
+//	return LIB::LoadImageEx(Color *pixels, int width, int height);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION LoadImagePro: void *DATA, int width, int height, int format  // Load image from raw data with parameters
+//INLINE
+//	return LIB::LoadImagePro(void *data, int width, int height, int format);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION LoadImageRaw: const char *fileName, int width, int height, int format, int headerSize  // Load image from RAW file data
+//INLINE
+//	return LIB::LoadImageRaw(const char *fileName, int width, int height, int format, int headerSize);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_UnloadImage: Image image  // Unload image from CPU memory 
+//INLINE
+//	LIB::UnloadImage(Image image);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ExportImage: Image image, const char *fileName  // Export image data to file
+//INLINE
+//	LIB::ExportImage(Image image, const char *fileName);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ExportImageAsCode: Image image, const char *fileName  // Export image as code file defining an array of bytes
+//INLINE
+//	LIB::ExportImageAsCode(Image image, const char *fileName);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION *GetImageData: Image image  // Get pixel data from image as a Color struct array
+//INLINE
+//	return LIB::*GetImageData(Image image);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION *GetImageDataNormalized: Image image  // Get pixel data from image as Vector4 array 
+//INLINE
+//	return LIB::*GetImageDataNormalized(Image image);
+//ENDINLINE
+//ENDFUNCTION
+//
+////------------------------------
+//// Image generation functions
+////------------------------------
+//FUNCTION GenImageColor: int width, int height, Color color  // Generate image: plain color
+//INLINE
+//	return LIB::GenImageColor(int width, int height, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GenImageGradientV: int width, int height, Color top, Color bottom  // Generate image: vertical gradient
+//INLINE
+//	return LIB::GenImageGradientV(int width, int height, Color top, Color bottom);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GenImageGradientH: int width, int height, Color left, Color right  // Generate image: horizontal gradient
+//INLINE
+//	return LIB::GenImageGradientH(int width, int height, Color left, Color right);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GenImageGradientRadial: int width, int height, float density, Color inner, Color outer  // Generate image: radial gradient
+//INLINE
+//	return LIB::GenImageGradientRadial(int width, int height, float density, Color inner, Color outer);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GenImageChecked: int width, int height, int checksX, int checksY, Color col1, Color col2  // Generate image: checked
+//INLINE
+//	return LIB::GenImageChecked(int width, int height, int checksX, int checksY, Color col1, Color col2);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GenImageWhiteNoise: int width, int height, float factor  // Generate image: white noise
+//INLINE
+//	return LIB::GenImageWhiteNoise(int width, int height, float factor);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GenImagePerlinNoise: int width, int height, int offsetX, int offsetY, float scale  // Generate image: perlin noise
+//INLINE
+//	return LIB::GenImagePerlinNoise(int width, int height, int offsetX, int offsetY, float scale);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GenImageCellular: int width, int height, int tileSize  // Generate image: cellular algorithm. Bigger tileSize means bigger cells
+//INLINE
+//	return LIB::GenImageCellular(int width, int height, int tileSize);
+//ENDINLINE
+//ENDFUNCTION
+//
+////------------------------------
+//// Image manipulation functions
+////------------------------------
+//FUNCTION ImageCopy: Image image  // Create an image duplicate 
+//INLINE
+//	return LIB::ImageCopy(Image image);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION ImageFromImage: Image image, Rectangle rec  // Create an image from another image piece
+//INLINE
+//	return LIB::ImageFromImage(Image image, Rectangle rec);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION ImageText: const char *text, int fontSize, Color color  // Create an image from text 
+//INLINE
+//	return LIB::ImageText(const char *text, int fontSize, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION ImageTextEx: Font font, const char *text, float fontSize, float spacing, Color tint  // Create an image from text 
+//INLINE
+//	return LIB::ImageTextEx(Font font, const char *text, float fontSize, float spacing, Color tint);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageToPOT: Image *image, Color fillColor  // Convert image to POT 
+//INLINE
+//	LIB::ImageToPOT(Image *image, Color fillColor);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageFormat: Image *image, int newFormat  // Convert image data to desired format
+//INLINE
+//	LIB::ImageFormat(Image *image, int newFormat);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageAlphaMask: Image *image, Image alphaMask  // Apply alpha mask to image
+//INLINE
+//	LIB::ImageAlphaMask(Image *image, Image alphaMask);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageAlphaClear: Image *image, Color color, float threshold  // Clear alpha channel to desired color
+//INLINE
+//	LIB::ImageAlphaClear(Image *image, Color color, float threshold);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageAlphaCrop: Image *image, float threshold  // Crop image depending on alpha value
+//INLINE
+//	LIB::ImageAlphaCrop(Image *image, float threshold);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageAlphaPremultiply: Image *image  // Premultiply alpha channel
+//INLINE
+//	LIB::ImageAlphaPremultiply(Image *image);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageCrop: Image *image, Rectangle crop  // Crop an image to a defined rectangle
+//INLINE
+//	LIB::ImageCrop(Image *image, Rectangle crop);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageResize: Image *image, int newWidth, int newHeight  // Resize image 
+//INLINE
+//	LIB::ImageResize(Image *image, int newWidth, int newHeight);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageResizeNN: Image *image, int newWidth,int newHeight  // Resize image 
+//INLINE
+//	LIB::ImageResizeNN(Image *image, int newWidth,int newHeight);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageResizeCanvas: Image *image, int newWidth, int newHeight, int offsetX, int offsetY, Color color  // Resize canvas and fill with color
+//INLINE
+//	LIB::ImageResizeCanvas(Image *image, int newWidth, int newHeight, int offsetX, int offsetY, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageMipmaps: Image *image  // Generate all mipmap levels for a provided image
+//INLINE
+//	LIB::ImageMipmaps(Image *image);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageDither: Image *image, int rBpp, int gBpp, int bBpp, int aBpp  // Dither image data to 16bpp or lower 
+//INLINE
+//	LIB::ImageDither(Image *image, int rBpp, int gBpp, int bBpp, int aBpp);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageFlipVertical: Image *image  // Flip image vertically
+//INLINE
+//	LIB::ImageFlipVertical(Image *image);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageFlipHorizontal: Image *image  // Flip image horizontally
+//INLINE
+//	LIB::ImageFlipHorizontal(Image *image);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageRotateCW: Image *image  // Rotate image clockwise 90deg
+//INLINE
+//	LIB::ImageRotateCW(Image *image);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageRotateCCW: Image *image  // Rotate image counter-clockwise 90deg
+//INLINE
+//	LIB::ImageRotateCCW(Image *image);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageColorTint: Image *image, Color color  // Modify image color: tint
+//INLINE
+//	LIB::ImageColorTint(Image *image, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageColorInvert: Image *image  // Modify image color: invert
+//INLINE
+//	LIB::ImageColorInvert(Image *image);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageColorGrayscale: Image *image  // Modify image color: grayscale
+//INLINE
+//	LIB::ImageColorGrayscale(Image *image);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageColorContrast: Image *image, float contrast  // Modify image color: contrast 
+//INLINE
+//	LIB::ImageColorContrast(Image *image, float contrast);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageColorBrightness: Image *image, int brightness  // Modify image color: brightness 
+//INLINE
+//	LIB::ImageColorBrightness(Image *image, int brightness);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageColorReplace: Image *image, Color color, Color replace  // Modify image color: replace color
+//INLINE
+//	LIB::ImageColorReplace(Image *image, Color color, Color replace);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION *ImageExtractPalette: Image image, int maxPaletteSize, int *extractCount  // Extract color palette from image to maximum size 
+//INLINE
+//	return LIB::*ImageExtractPalette(Image image, int maxPaletteSize, int *extractCount);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GetImageAlphaBorder: Image image, float threshold  // Get image alpha border rectangle
+//INLINE
+//	return LIB::GetImageAlphaBorder(Image image, float threshold);
+//ENDINLINE
+//ENDFUNCTION
+//
+////------------------------------
+//// Image drawing functions
+////------------------------------
+////------------------------------
+//// NOTE: Image software-rendering functions (CPU)
+////------------------------------
+//FUNCTION RL_ImageClearBackground: Image *dst, Color color  // Clear image background with given color
+//INLINE
+//	LIB::ImageClearBackground(Image *dst, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageDrawPixel: Image *dst, int posX, int posY, Color color  // Draw pixel within an image
+//INLINE
+//	LIB::ImageDrawPixel(Image *dst, int posX, int posY, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageDrawPixelV: Image *dst, Vector2 position, Color color  // Draw pixel within an image 
+//INLINE
+//	LIB::ImageDrawPixelV(Image *dst, Vector2 position, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageDrawLine: Image *dst, int startPosX, int startPosY, int endPosX, int endPosY, Color color  // Draw line within an image
+//INLINE
+//	LIB::ImageDrawLine(Image *dst, int startPosX, int startPosY, int endPosX, int endPosY, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageDrawLineV: Image *dst, Vector2 start, Vector2 end, Color color  // Draw line within an image 
+//INLINE
+//	LIB::ImageDrawLineV(Image *dst, Vector2 start, Vector2 end, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageDrawCircle: Image *dst, int centerX, int centerY, int radius, Color color  // Draw circle within an image
+//INLINE
+//	LIB::ImageDrawCircle(Image *dst, int centerX, int centerY, int radius, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageDrawCircleV: Image *dst, Vector2 center, int radius, Color color  // Draw circle within an image 
+//INLINE
+//	LIB::ImageDrawCircleV(Image *dst, Vector2 center, int radius, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageDrawRectangle: Image *dst, int posX, int posY, int width, int height, Color color  // Draw rectangle within an image
+//INLINE
+//	LIB::ImageDrawRectangle(Image *dst, int posX, int posY, int width, int height, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageDrawRectangleV: Image *dst, Vector2 position, Vector2 size, Color color  // Draw rectangle within an image 
+//INLINE
+//	LIB::ImageDrawRectangleV(Image *dst, Vector2 position, Vector2 size, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageDrawRectangleRec: Image *dst, Rectangle rec, Color color  // Draw rectangle within an image 
+//INLINE
+//	LIB::ImageDrawRectangleRec(Image *dst, Rectangle rec, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageDrawRectangleLines: Image *dst, Rectangle rec, int thick, Color color  // Draw rectangle lines within an image
+//INLINE
+//	LIB::ImageDrawRectangleLines(Image *dst, Rectangle rec, int thick, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageDraw: Image *dst, Image src, Rectangle srcRec, Rectangle dstRec, Color tint  // Draw a source image within a destination image 
+//INLINE
+//	LIB::ImageDraw(Image *dst, Image src, Rectangle srcRec, Rectangle dstRec, Color tint);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageDrawText: Image *dst, Vector2 position, const char *text, int fontSize, Color color  // Draw text 
+//INLINE
+//	LIB::ImageDrawText(Image *dst, Vector2 position, const char *text, int fontSize, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_ImageDrawTextEx: Image *dst, Vector2 position, Font font, const char *text, float fontSize, float spacing, Color color  // Draw text 
+//INLINE
+//	LIB::ImageDrawTextEx(Image *dst, Vector2 position, Font font, const char *text, float fontSize, float spacing, Color color);
+//ENDINLINE
+//ENDFUNCTION
+//
+////------------------------------
+//// Texture loading functions
+////------------------------------
+////------------------------------
+//// NOTE: These functions require GPU access
+////------------------------------
+FUNCTION RL_LoadTexture AS RL_Texture2D: fileName$  // Load texture from file into GPU memory 
+INLINE
+	LIB::Texture2D tex;
+	tex = LIB::LoadTexture(fileName_Str.c_str());
+	return RaylibTexture2D_to_GLBasicTexture2D(&tex);
+ENDINLINE
+ENDFUNCTION
+//
+//FUNCTION LoadTextureFromImage: Image image  // Load texture from image data
+//INLINE
+//	return LIB::LoadTextureFromImage(Image image);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION LoadTextureCubemap: Image image, int layoutType  // Load cubemap from image, multiple image cubemap layouts supported
+//INLINE
+//	return LIB::LoadTextureCubemap(Image image, int layoutType);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION LoadRenderTexture: int width, int height  // Load texture for rendering 
+//INLINE
+//	return LIB::LoadRenderTexture(int width, int height);
+//ENDINLINE
+//ENDFUNCTION
+//
+FUNCTION RL_UnloadTexture: texture AS RL_Texture2D // Unload texture from GPU memory 
+INLINE
+	LIB::UnloadTexture(GLBasicTexture2D_to_RaylibTexture2D( texture ));	
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION RL_UnloadRenderTexture: RenderTexture2D target  // Unload render texture from GPU memory 
+//INLINE
+//	LIB::UnloadRenderTexture(RenderTexture2D target);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_UpdateTexture: Texture2D texture, const void *pixels  // Update GPU texture with new data
+//INLINE
+//	LIB::UpdateTexture(Texture2D texture, const void *pixels);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GetTextureData: Texture2D texture  // Get pixel data from GPU texture and return an Image
+//INLINE
+//	return LIB::GetTextureData(Texture2D texture);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION GetScreenData: void  // Get pixel data from screen buffer and return an Image 
+//INLINE
+//	return LIB::GetScreenData(void);
+//ENDINLINE
+//ENDFUNCTION
+//
+////------------------------------
+//// Texture configuration functions
+////------------------------------
+//FUNCTION RL_GenTextureMipmaps: Texture2D *texture  // Generate GPU mipmaps for a texture
+//INLINE
+//	LIB::GenTextureMipmaps(Texture2D *texture);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_SetTextureFilter: Texture2D texture, int filterMode  // Set texture scaling filter mode
+//INLINE
+//	LIB::SetTextureFilter(Texture2D texture, int filterMode);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_SetTextureWrap: Texture2D texture, int wrapMode  // Set texture wrapping mode
+//INLINE
+//	LIB::SetTextureWrap(Texture2D texture, int wrapMode);
+//ENDINLINE
+//ENDFUNCTION
+//
+////------------------------------
+//// Texture drawing functions
+////------------------------------
+FUNCTION RL_DrawTexture: texture AS RL_Texture2D, posX, posY, _color AS RL_Color   // Draw a Texture2D
+INLINE
+	LIB::DrawTexture( GLBasicTexture2D_to_RaylibTexture2D(texture), posX, posY, GLBasicColor_to_RaylibColor(_color));
+ENDINLINE
+ENDFUNCTION
+
+//FUNCTION RL_DrawTextureV: Texture2D texture, Vector2 position, Color tint  // Draw a Texture2D with position defined as Vector2
+//INLINE
+//	LIB::DrawTextureV(Texture2D texture, Vector2 position, Color tint);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_DrawTextureEx: Texture2D texture, Vector2 position, float rotation, float scale, Color tint  // Draw a Texture2D with extended parameters
+//INLINE
+//	LIB::DrawTextureEx(Texture2D texture, Vector2 position, float rotation, float scale, Color tint);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_DrawTextureRec: Texture2D texture, Rectangle sourceRec, Vector2 position, Color tint  // Draw a part of a texture defined by a rectangle
+//INLINE
+//	LIB::DrawTextureRec(Texture2D texture, Rectangle sourceRec, Vector2 position, Color tint);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_DrawTextureQuad: Texture2D texture, Vector2 tiling, Vector2 offset, Rectangle quad, Color tint  // Draw texture quad with tiling and offset parameters
+//INLINE
+//	LIB::DrawTextureQuad(Texture2D texture, Vector2 tiling, Vector2 offset, Rectangle quad, Color tint);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_DrawTexturePro: Texture2D texture, Rectangle sourceRec, Rectangle destRec, Vector2 origin, float rotation, Color tint  // Draw a part of a texture defined by a rectangle with 'pro' parameters
+//INLINE
+//	LIB::DrawTexturePro(Texture2D texture, Rectangle sourceRec, Rectangle destRec, Vector2 origin, float rotation, Color tint);
+//ENDINLINE
+//ENDFUNCTION
+//
+//FUNCTION RL_DrawTextureNPatch: Texture2D texture, NPatchInfo nPatchInfo, Rectangle destRec, Vector2 origin, float rotation, Color tint  // Draws a texture 
+//INLINE
+//	LIB::DrawTextureNPatch(Texture2D texture, NPatchInfo nPatchInfo, Rectangle destRec, Vector2 origin, float rotation, Color tint);
+//ENDINLINE
+//ENDFUNCTION
+//
+////------------------------------
+//// Image/Texture misc functions
+////------------------------------
+//FUNCTION RL_GetPixelDataSize: int width, int height, int format  
+//INLINE
+//	return LIB::GetPixelDataSize(int width, int height, int format);
+//ENDINLINE
+//ENDFUNCTION
+
+
 
 
 

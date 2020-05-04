@@ -8,9 +8,11 @@ LOCAL Title$ = "Raylib for GLBasic!"
 RL_InitWindow(800,600, Title$)
 RL_SetTargetFPS(60)
 
+LOCAL col_white AS RL_Color
+col_white.SetRGBA( RGB(0xff, 0xff, 0xff) )
 
 LOCAL col_lightgray AS RL_Color
-col_lightgray.Set(200, 200, 200, 255)
+col_lightgray.SetRGBA( RGB(0xc0, 0xc0, 0xc0) )
 
 LOCAL col_raywhite AS RL_Color
 col_raywhite.Set(245, 245, 245, 255)
@@ -25,19 +27,18 @@ fnt_default = RL_GetFontDefault()
 LOCAL fnt_PermMarker AS RL_Font
 fnt_PermMarker = RL_LoadFont("fonts/PermanentMarker.ttf")
 
-LOCAL winPos AS RL_Vector2
+
+LOCAL logo AS RL_Texture2D
+logo = RL_LoadTexture("sprites/raylib_for_glbasic.png")
 
 
 WHILE NOT RL_WindowShouldClose()
-	
-	winPos = RL_GetWindowPosition()
-	
+
 	RL_BeginDrawing()
 
 		RL_ClearBackground(col_lightgray)
 		
-		RL_DrawText("WinPosX: " + winPos.x , 0, 0, 20, col_red)
-		RL_DrawText("WinPosY: " + winPos.y , 0, 25, 20, col_red)
+		RL_DrawTexture(logo, 250, 300, col_white)
 		
 		RL_DrawText("Congrats! You created your first window!", 190, 200, 20, col_red)
 		RL_DrawTextEx(fnt_PermMarker, "Oh, hi...! I'm the new Font!", 200, 250, 40, 2, col_raywhite)
