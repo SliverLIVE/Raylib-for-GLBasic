@@ -6,9 +6,11 @@
 
 INLINE
 }
+#include <stdlib.h> // malloc, free, rand
 
 namespace LIB{
 	#include "raylib.h"
+	
 
 	DGArray<Color>_Color;
 	int CreateColorInstance(Color c)
@@ -19,19 +21,108 @@ namespace LIB{
 	Color GetColorInstance(int index)
 	{
 		return _Color(index);
-	}
-
-	DGArray<Font>_Font;
-	int CreateFontInstance(Font f)
-	{
-		DIMPUSH(_Font, f);
-		return LEN(_Font())-1;
-	}
-	Font GetFontInstance(int index)
-	{
-		return _Font(index);
-	}
+	}	
+	
 }
+	
+	Color RyalibColor_to_GLBasicColor(LIB::Color *c)
+	{
+		Color col;
+		col.r = c->r;
+		col.g = c->g;
+		col.b = c->b;
+		col.a = c->a;
+		
+		return col;
+	}
+	
+	LIB::Color GLBasicColor_to_RyalibColor(Color c)
+	{
+		LIB::Color col;
+		col.r = c.r;
+		col.g = c.g;
+		col.b = c.b;
+		col.a = c.a;
+		
+		return col;
+	}
+	
+	Font RaylibFont_to_GLBasicFont(LIB::Font *f)
+	{
+		Font fnt;
+		fnt.baseSize 		= f->baseSize;
+		fnt.charsCount 		= f->charsCount;
+		fnt.texture.id 		= f->texture.id;
+		fnt.texture.width 	= f->texture.width;
+		fnt.texture.height	= f->texture.height;
+		fnt.texture.mipmaps = f->texture.mipmaps;
+		fnt.texture.format	= f->texture.format;
+	
+		for(int i = 0; i < f->charsCount; i++)
+		{
+			Rectangle r; 
+			r.x 		= f->recs[i].x;
+			r.y 		= f->recs[i].y;
+			r.width 	= f->recs[i].width;
+			r.height 	= f->recs[i].height;
+			DIMPUSH(fnt.recs, r);
+	
+	
+			CharInfo c;
+			c.value =  f->chars[i].value;
+			c.offsetX = f->chars[i].offsetX;
+			c.offsetY = f->chars[i].offsetY;
+			c.advanceX = f->chars[i].advanceX;
+			
+			c._image.data_Str = (const char*)f->chars[i].image.data;
+			c._image.width = f->chars[i].image.width;
+			c._image.height = f->chars[i].image.height;
+			c._image.mipmaps = f->chars[i].image.mipmaps;
+			c._image.format = f->chars[i].image.format;
+			DIMPUSH(fnt.chars, c);
+		}
+		return fnt;
+	}
+	
+	
+	LIB::Font GLBasicFont_to_RaylibFont(Font f)
+	{
+		LIB::Font fnt;
+		
+		fnt.baseSize 		= f.baseSize;
+		fnt.charsCount 		= f.charsCount;
+		fnt.texture.id 		= f.texture.id;
+		fnt.texture.width 	= f.texture.width;
+		fnt.texture.height	= f.texture.height;
+		fnt.texture.mipmaps = f.texture.mipmaps;
+		fnt.texture.format	= f.texture.format;
+		
+		fnt.chars = (LIB::CharInfo *)malloc(fnt.charsCount*sizeof(LIB::CharInfo));
+		fnt.recs = (LIB::Rectangle *)malloc(fnt.charsCount*sizeof(LIB::Rectangle));
+		
+		for(int i = 0; i < f.charsCount; i++)
+		{
+			// recs
+			fnt.recs[i].x 		= f.recs(i).x;
+			fnt.recs[i].y 		= f.recs(i).y;
+			fnt.recs[i].width 	= f.recs(i).width;
+			fnt.recs[i].height 	= f.recs(i).height;
+			
+			// chars
+			fnt.chars[i].value = f.chars(i).value;
+			fnt.chars[i].offsetX = f.chars(i).offsetX;
+			fnt.chars[i].offsetY = f.chars(i).offsetY;
+			fnt.chars[i].advanceX = f.chars(i).advanceX;
+			
+			//image
+			fnt.chars[i].image.data = (void*)f.chars(i)._image.data_Str;
+			fnt.chars[i].image.width = f.chars(i)._image.width;
+			fnt.chars[i].image.height = f.chars(i)._image.height;
+			fnt.chars[i].image.mipmaps = f.chars(i)._image.mipmaps;
+			fnt.chars[i].image.format = f.chars(i)._image.format;
+		}
+		return fnt;
+	}
 
 namespace __GLBASIC__{
 ENDINLINE
@@ -51,16 +142,6 @@ FUNCTION ColorInstance: r, g, b, a
 		return LIB::CreateColorInstance(color);
 	ENDINLINE
 ENDFUNCTION
-
-FUNCTION FontInstance:
-INLINE
-	LIB::Font font;
-	return LIB::CreateFontInstance(font);
-ENDINLINE
-ENDFUNCTION
-
-
-
 
 SUB _RAYLIB_CORE:
 	// JUST FOR QUICKJUMPING IN SOURCE!
@@ -280,9 +361,9 @@ ENDFUNCTION
 //------------------------------
 // Drawing-related functions
 //------------------------------
-FUNCTION ClearBackground: color  // Set background color
+FUNCTION ClearBackground: _color AS Color  // Set background color
 INLINE
-	LIB::ClearBackground( LIB::GetColorInstance(color) );
+	LIB::ClearBackground( GLBasicColor_to_RyalibColor(_color) );
 ENDINLINE
 ENDFUNCTION
 
@@ -457,10 +538,10 @@ ENDFUNCTION
 //ENDINLINE
 //ENDFUNCTION
 //
-FUNCTION Fade: color, alpha#  // Color fade-in or fade-out, alpha goes from 0.0f to 1.0f
+FUNCTION Fade: _color, alpha#  // Color fade-in or fade-out, alpha goes from 0.0f to 1.0f
 INLINE
-	LIB::_Color(color) =  LIB::Fade(LIB::_Color(color), (float)alpha);
-	return color;
+	LIB::_Color(_color) =  LIB::Fade(LIB::_Color(_color), (float)alpha);
+	return _color;
 ENDINLINE
 ENDFUNCTION
 
@@ -999,27 +1080,35 @@ ENDSUB
 //------------------------------
 // Font loading/unloading functions
 //------------------------------
-FUNCTION GetFontDefault:  // Get the default Font
+FUNCTION GetFontDefault AS Font:  // Get the default Font
 INLINE
-	LIB::Font f;
-	f = LIB::GetFontDefault();
-	return CreateFontInstance(f);
+	LIB::Font f; // raylib Font
+	Font fnt;	// GLB Type Font
+	f = LIB::GetFontDefault();	
+	fnt = RaylibFont_to_GLBasicFont(&f);
+	
+	return fnt;
 ENDINLINE
 ENDFUNCTION
 
-FUNCTION LoadFont_: fileName$  // Load font from file into GPU memory
+FUNCTION LoadFont_ AS Font: fileName$  // Load font from file into GPU memory
 INLINE
+	Font fnt;
 	LIB::Font f;
 	f = LIB::LoadFont(fileName_Str.c_str());
-	return CreateFontInstance(f);
+	fnt = RaylibFont_to_GLBasicFont(&f);
+	return fnt;
 ENDINLINE
 ENDFUNCTION
 
-FUNCTION LoadFontEx: fileName$, fontSize, fontChars, charsCount  // Load font from file with extended parameters
+FUNCTION LoadFontEx AS Font: fileName$, fontSize, fontChars, charsCount  // Load font from file with extended parameters
 INLINE
 	LIB::Font f;
+	Font fnt;
 	f = LIB::LoadFontEx(fileName_Str.c_str(), fontSize, 0, charsCount);
-	return CreateFontInstance(f);
+	fnt = RaylibFont_to_GLBasicFont(&f);
+	
+	return fnt;
 ENDINLINE
 ENDFUNCTION
 
@@ -1056,15 +1145,17 @@ INLINE
 ENDINLINE
 ENDFUNCTION
 
-FUNCTION DrawText: text$, posX, posY, fontSize, color  // Draw text
+FUNCTION DrawText: text$, posX, posY, fontSize, _color AS Color  // Draw text
 INLINE
-	LIB::DrawText(text_Str.c_str(), posX, posY, fontSize, LIB::_Color(color));
+	LIB::DrawText(text_Str.c_str(), posX, posY, fontSize, GLBasicColor_to_RyalibColor(_color) );
 ENDINLINE
 ENDFUNCTION
 
-FUNCTION DrawTextEx: font, text$, posX, posY, fontSize#, spacing#, color  // Draw text using font and additional parameters
+FUNCTION DrawTextEx: _font AS Font, text$, posX, posY, fontSize#, spacing#, _color AS Color  // Draw text using font and additional parameters
 INLINE
-	LIB::DrawTextEx(LIB::_Font(font), text_Str.c_str(), (LIB::Vector2){(float)posX, (float)posY}, (float)fontSize, (float)spacing, LIB::_Color(color));
+	LIB::Font fnt;
+	fnt = GLBasicFont_to_RaylibFont(_font);
+	LIB::DrawTextEx(fnt, text_Str.c_str(), (LIB::Vector2){(float)posX, (float)posY}, (float)fontSize, (float)spacing, GLBasicColor_to_RyalibColor(_color));
 ENDINLINE
 ENDFUNCTION
 
@@ -1234,9 +1325,13 @@ ENDFUNCTION
 // TESTING STUFF!!!!!
 SUB _TESTINGAREA:
 ENDSUB
-//
-//FUNCTION GenTextureMipmaps: font
-//INLINE
-//	LIB::GenTextureMipmaps(&LIB::_Font(font).texture);
-//ENDINLINE
-//ENDFUNCTION
+
+
+FUNCTION GenTextureMipmaps: _font AS Font
+INLINE
+	LIB::Font f;
+	f = GLBasicFont_to_RaylibFont(_font);	 	
+	LIB::GenTextureMipmaps(&f.texture);
+	_font = RaylibFont_to_GLBasicFont(&f);	
+ENDINLINE
+ENDFUNCTION
