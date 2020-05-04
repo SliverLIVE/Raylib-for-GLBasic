@@ -4,76 +4,76 @@
 // IDE Version: 16.508
 
 
-TYPE Vector2
+TYPE RL_Vector2
 	x#; y#	// floats
 ENDTYPE
 
-TYPE Vector3
+TYPE RL_Vector3
 	x#; y#; z# // floats
 ENDTYPE
 
-TYPE Vector4
+TYPE RL_Vector4
 	x#; y#; z#; w# //floats
 ENDTYPE
 
-TYPE Matrix
+TYPE RL_Matrix
 	m0#;m4#;m8#;m12#	// floats
 	m1#;m5#;m9#;m13#	// floats
 	m2#;m6#;m10#;m14#	// floats
 	m3#;m7#;m11#;m15#	// floats
 ENDTYPE
 
-TYPE Color
+TYPE RL_Color
 	r%;g%;b%;a% // ints
 	FUNCTION Set: r%, g%, b%, a%
 		self.r = r; self.g = g; self.b = b; self.a = a
-	ENDFUNCTION 
+	ENDFUNCTION
 ENDTYPE
 
-TYPE Rectangle
+TYPE RL_Rectangle
 	x#;y#			// floats
 	width#; height#	// floats
 ENDTYPE
 
-TYPE Image
+TYPE RL_Image
 	data$ 			// should be void*
 	width%; height%	// ints
 	mipmaps%	 	// int
 	format% 		// int
 ENDTYPE
 
-TYPE Texture2D		//<-- the same Texture and TextureCubemap
+TYPE RL_Texture2D		//<-- the same Texture and TextureCubemap
 	id%
 	width%; height% // ints
 	mipmaps%	 	// int
 	format% 		// int
 ENDTYPE
 
-TYPE RenderTexture2D		// <-- the same RenderTexture
+TYPE RL_RenderTexture2D		// <-- the same RenderTexture
 	id%						// int
-	texture AS Texture2D	// ref to a Texture2D
-	depth AS Texture2D		// ref to a Texture2D
+	texture AS RL_Texture2D	// ref to a Texture2D
+	depth AS RL_Texture2D		// ref to a Texture2D
 	depthTexture%			// should be bool
 ENDTYPE
 
-TYPE NPatchInfo
-	sourceRec AS Rectangle			// ref to Rectangle
+TYPE RL_NPatchInfo
+	sourceRec AS RL_Rectangle			// ref to Rectangle
 	left%; top%; right%; bottom%	// ints
 	_type%							// int. Name should "type"... but GLB will not let me
 ENDTYPE
 
-TYPE CharInfo
+TYPE RL_CharInfo
 	value%				// int
 	offsetX%; offsetY%	// ints
 	advanceX%			// int
-	_image AS Image 	// ref to Image. Name sould be "image"... but GLB...
+	_image AS RL_Image 	// ref to Image. Name sould be "image"... but GLB...
 ENDTYPE
 
-TYPE Font
+TYPE RL_Font
 	baseSize%				// int
 	charsCount%				// int
-	texture AS Texture2D	// ref to Texture2D
-	recs[] AS Rectangle	// ref to Rectangle as ARRAY
-	chars[] AS CharInfo		// ref to CharInfo as ARRAY
+	texture AS RL_Texture2D	// ref to Texture2D
+	recs[] AS RL_Rectangle	// ref to Rectangle as ARRAY
+	chars[] AS RL_CharInfo		// ref to CharInfo as ARRAY
 ENDTYPE
 

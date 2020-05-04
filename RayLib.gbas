@@ -5,36 +5,45 @@
 
 LOCAL Title$ = "Raylib for GLBasic!"
 
-InitWindow(800,600, Title$)
-SetTargetFPS(60)
+RL_InitWindow(800,600, Title$)
+RL_SetTargetFPS(60)
 
 
-LOCAL col_lightgray AS Color
+LOCAL col_lightgray AS RL_Color
 col_lightgray.Set(200, 200, 200, 255)
 
-LOCAL col_raywhite AS Color
+LOCAL col_raywhite AS RL_Color
 col_raywhite.Set(245, 245, 245, 255)
 
-LOCAL col_red AS Color
+LOCAL col_red AS RL_Color
 col_red.Set(255, 0, 0,255)
 
 
-LOCAL fnt_default AS Font
-fnt_default = GetFontDefault()
+LOCAL fnt_default AS RL_Font
+fnt_default = RL_GetFontDefault()
 
-LOCAL fnt_PermMarker AS Font
-fnt_PermMarker = LoadFont_("fonts/PermanentMarker.ttf")
+LOCAL fnt_PermMarker AS RL_Font
+fnt_PermMarker = RL_LoadFont("fonts/PermanentMarker.ttf")
 
-WHILE NOT WindowShouldClose()
+LOCAL winPos AS RL_Vector2
 
-	BeginDrawing()
 
-		ClearBackground(col_lightgray)
-		DrawText("Congrats! You created your first window!", 190, 200, 20, col_red)
-		DrawTextEx(fnt_PermMarker, "Oh, hi...! I'm the new Font!", 200, 250, 40, 2, col_raywhite)
-
-	EndDrawing()
+WHILE NOT RL_WindowShouldClose()
 	
+	winPos = RL_GetWindowPosition()
+	
+	RL_BeginDrawing()
+
+		RL_ClearBackground(col_lightgray)
+		
+		RL_DrawText("WinPosX: " + winPos.x , 0, 0, 20, col_red)
+		RL_DrawText("WinPosY: " + winPos.y , 0, 25, 20, col_red)
+		
+		RL_DrawText("Congrats! You created your first window!", 190, 200, 20, col_red)
+		RL_DrawTextEx(fnt_PermMarker, "Oh, hi...! I'm the new Font!", 200, 250, 40, 2, col_raywhite)
+
+	RL_EndDrawing()
+
 WEND
 
-CloseWindow()
+RL_CloseWindow()
