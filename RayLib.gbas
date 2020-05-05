@@ -31,17 +31,39 @@ fnt_PermMarker = RL_LoadFont("fonts/PermanentMarker.ttf")
 LOCAL logo AS RL_Texture2D
 logo = RL_LoadTexture("sprites/raylib_for_glbasic.png")
 
+LOCAL posX = 260, posY = 175
+
+LOCAL keyboard AS RL_ENUM_KeyboardKey // The "KeyboardKey-Enum"
+
 
 WHILE NOT RL_WindowShouldClose()
+	
+	// Move the Logo
+	IF RL_IsKeyDown(keyboard.KEY_A)
+		DEC posX, 2
+	ENDIF
+	IF RL_IsKeyDown(keyboard.KEY_D)
+		INC posX, 2
+	ENDIF	
+	IF RL_IsKeyDown(keyboard.KEY_W)
+		DEC posY, 2
+	ENDIF
+	IF RL_IsKeyDown(keyboard.KEY_S)
+		INC posY, 2
+	ENDIF
 
+	
 	RL_BeginDrawing()
-
+		
 		RL_ClearBackground(col_lightgray)
+
+		RL_DrawTexture(logo, posX, posY, col_white)
 		
-		RL_DrawTexture(logo, 250, 300, col_white)
-		
-		RL_DrawText("Congrats! You created your first window!", 190, 200, 20, col_red)
-		RL_DrawTextEx(fnt_PermMarker, "Oh, hi...! I'm the new Font!", 200, 250, 40, 2, col_raywhite)
+		RL_DrawText("Logo-PosX: "+ posX, 0,0,18,col_raywhite)
+		RL_DrawText("Logo-PosY: "+ posY, 0,20,18,col_raywhite)
+
+		RL_DrawText("Move Logo with WASD-Keys.", 250, 25, 20, col_red)
+		RL_DrawTextEx(fnt_PermMarker, "Oh, hi...! I'm the new Font!", 200, 50, 40, 2, col_red)
 
 	RL_EndDrawing()
 
