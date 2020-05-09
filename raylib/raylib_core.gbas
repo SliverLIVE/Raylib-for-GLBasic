@@ -3,6 +3,8 @@
 // Start: Sunday, May 03, 2020
 // IDE Version: 16.508
 
+SUB _FILE_START:
+ENDSUB
 
 INLINE
 }
@@ -11,7 +13,7 @@ INLINE
 namespace LIB{
 	#include "raylib.h"
 }
-
+	// VECTOR2
 	RL_Vector2 RaylibVector2_to_GLBasicVector2(LIB::Vector2 *v2)
 	{
 		RL_Vector2 vec2;
@@ -27,7 +29,48 @@ namespace LIB{
 		vec2.y = v2.y;
 		return vec2;
 	}
+	
+	// VECTOR3
+	RL_Vector3 RaylibVector3_to_GLBasicVector3(LIB::Vector3 *v3)
+	{
+		RL_Vector3 vec3;
+		vec3.x = v3->x;
+		vec3.y = v3->y;
+		vec3.z = v3->z;
+		return vec3;
+	}
 
+	LIB::Vector3 GLBasicVector3_to_RaylibVector3(RL_Vector3 v3)
+	{
+		LIB::Vector3 vec3;
+		vec3.x = v3.x;
+		vec3.y = v3.y;
+		vec3.z = v3.z;
+		return vec3;
+	}
+
+	// VECTOR4
+	RL_Vector4 RaylibVector4_to_GLBasicVector4(LIB::Vector4 *v4)
+	{
+		RL_Vector4 vec4;
+		vec4.x = v4->x;
+		vec4.y = v4->y;
+		vec4.z = v4->z;
+		vec4.w = v4->w;
+		return vec4;
+	}
+
+	LIB::Vector4 GLBasicVector4_to_RaylibVector4(RL_Vector4 v4)
+	{
+		LIB::Vector4 vec4;
+		vec4.x = v4.x;
+		vec4.y = v4.y;
+		vec4.z = v4.z;
+		vec4.w = v4.w;
+		return vec4;
+	}	
+	
+	// COLOR
 	RL_Color RaylibColor_to_GLBasicColor(LIB::Color *c)
 	{
 		RL_Color col;
@@ -49,7 +92,8 @@ namespace LIB{
 
 		return col;
 	}
-
+	
+	// FONT
 	RL_Font RaylibFont_to_GLBasicFont(LIB::Font *f)
 	{
 		RL_Font fnt;
@@ -87,7 +131,6 @@ namespace LIB{
 		return fnt;
 	}
 
-
 	LIB::Font GLBasicFont_to_RaylibFont(RL_Font f)
 	{
 		LIB::Font fnt;
@@ -124,14 +167,11 @@ namespace LIB{
 			fnt.chars[i].image.mipmaps = f.chars(i)._image.mipmaps;
 			fnt.chars[i].image.format = f.chars(i)._image.format;
 		}
-		
-		free(fnt.chars);
-		free(fnt.recs);
-		
+
 		return fnt;
 	}
 
-
+	// IMAGE
 	RL_Image RaylibImage_to_GLBasicImage(LIB::Image *i)
 	{
 		RL_Image img;
@@ -158,7 +198,7 @@ namespace LIB{
 		return img;
 	}
 
-
+	// TEXTURE2D
 	RL_Texture2D RaylibTexture2D_to_GLBasicTexture2D(LIB::Texture2D *t)
 	{
 		RL_Texture2D tex;
@@ -185,6 +225,123 @@ namespace LIB{
 		return tex;
 	}
 
+	// CAMERA2D
+	RL_Camera2D RaylibCamera2D_to_GLBasicCamera2D(LIB::Camera2D *c)
+	{
+		RL_Camera2D cam;
+
+		cam.offset 		= RaylibVector2_to_GLBasicVector2(&c->offset);
+		cam.target 		= RaylibVector2_to_GLBasicVector2(&c->target);
+		cam.rotation 	= c->rotation;
+		cam.zoom		= c->zoom;
+		
+		return cam;
+	}
+
+	LIB::Camera2D GLBasicCamera2D_to_RaylibCamera2D(RL_Camera2D c)
+	{
+		LIB::Camera2D cam;
+
+		cam.offset 		= GLBasicVector2_to_RaylibVector2(c.offset);
+		cam.target 		= GLBasicVector2_to_RaylibVector2(c.target);
+		cam.rotation 	= c.rotation;
+		cam.zoom		= c.zoom;
+		
+		return cam;
+	}
+
+	// CAMERA3D
+	RL_Camera3D RaylibCamera3D_to_GLBasicCamera3D(LIB::Camera3D *c)
+	{
+		RL_Camera3D cam;
+		cam.position 	= RaylibVector3_to_GLBasicVector3(&c->position);
+		cam.target 		= RaylibVector3_to_GLBasicVector3(&c->target);
+		cam.up			= RaylibVector3_to_GLBasicVector3(&c->up);
+		cam.fovy		= c->fovy;
+		cam._type		= c->type;
+		
+		return cam;
+	}
+	
+	LIB::Camera3D GLBasicCamera3D_to_RaylibCamera3D(RL_Camera3D c)
+	{
+		LIB::Camera3D cam;
+		cam.position 	= GLBasicVector3_to_RaylibVector3(c.position);
+		cam.target 		= GLBasicVector3_to_RaylibVector3(c.target);
+		cam.up			= GLBasicVector3_to_RaylibVector3(c.up);
+		cam.fovy		= c.fovy;
+		cam.type		= c._type;
+		
+		return cam;
+	}
+	
+	
+	// RAY
+	RL_Ray RaylibRay_to_GLBasicRay(LIB::Ray *r)
+	{
+		RL_Ray ray;
+		ray.position	= RaylibVector3_to_GLBasicVector3(&r->position);
+		ray.direction	= RaylibVector3_to_GLBasicVector3(&r->direction);
+		
+		return ray;
+	}
+
+	LIB::Ray RaylibRay_to_GLBasicRay(RL_Ray r)
+	{
+		LIB::Ray ray;
+		ray.position	= GLBasicVector3_to_RaylibVector3(r.position);
+		ray.direction	= GLBasicVector3_to_RaylibVector3(r.direction);
+		
+		return ray;
+	}
+	
+	
+	// RENDERTEXTURE2D
+	RL_RenderTexture2D RaylibRenderTexture2D_to_GLBasicRenderTexture2D(LIB::RenderTexture2D *r)
+	{
+		RL_RenderTexture2D ren;
+		ren.id				= r->id;
+		ren.texture			= RaylibTexture2D_to_GLBasicTexture2D(&r->texture);
+		ren.depth			= RaylibTexture2D_to_GLBasicTexture2D(&r->depth);
+		ren.depthTexture	= (int)r->depthTexture;
+		
+		return ren;
+	}
+
+	LIB::RenderTexture2D GLBasicRenderTexture2D_to_RaylibRenderTexture2D(RL_RenderTexture2D r)
+	{
+		LIB::RenderTexture2D ren;
+		ren.id				= r.id;
+		ren.texture			= GLBasicTexture2D_to_RaylibTexture2D(r.texture);
+		ren.depth			= GLBasicTexture2D_to_RaylibTexture2D(r.depth);
+		ren.depthTexture	= (bool)r.depthTexture;
+		
+		return ren;
+	}	
+	
+	// MATRIX	
+	RL_Matrix RaylibMatrix_to_GLBasicMatrix(LIB::Matrix *m)
+	{
+		RL_Matrix mat;
+		mat.m0 = m->m0; mat.m4 = m->m4; mat.m8 = m->m8; mat.m12 = m->m12;
+		mat.m1 = m->m1; mat.m5 = m->m5; mat.m9 = m->m9; mat.m13 = m->m13;
+		mat.m2 = m->m2; mat.m6 = m->m6; mat.m10 = m->m10; mat.m14 = m->m14;
+		mat.m3 = m->m3; mat.m7 = m->m7; mat.m11 = m->m11; mat.m15 = m->m15;
+		
+		return mat;
+	}
+
+	LIB::Matrix GLBasicMatrix_to_RaylibMatrix(RL_Matrix m)
+	{
+		LIB::Matrix mat;
+		mat.m0 = m.m0; mat.m4 = m.m4; mat.m8 = m.m8; mat.m12 = m.m12;
+		mat.m1 = m.m1; mat.m5 = m.m5; mat.m9 = m.m9; mat.m13 = m.m13;
+		mat.m2 = m.m2; mat.m6 = m.m6; mat.m10 = m.m10; mat.m14 = m.m14;
+		mat.m3 = m.m3; mat.m7 = m.m7; mat.m11 = m.m11; mat.m15 = m.m15;
+		
+		return mat;
+	}
+	
 namespace __GLBASIC__{
 ENDINLINE
 
@@ -262,11 +419,11 @@ INLINE
 ENDINLINE
 ENDFUNCTION
 
-//FUNCTION RL_SetWindowIcon: Image image  // Set icon for window
-//INLINE
-//	LIB::SetWindowIcon(Image image);
-//ENDINLINE
-//ENDFUNCTION
+FUNCTION RL_SetWindowIcon: image AS RL_Image  // Set icon for window
+INLINE
+	LIB::SetWindowIcon(GLBasicImage_to_RaylibImage(image));
+ENDINLINE
+ENDFUNCTION
 
 FUNCTION RL_SetWindowTitle: title$  // Set title for window
 INLINE
@@ -426,11 +583,11 @@ INLINE
 ENDINLINE
 ENDFUNCTION
 
-//FUNCTION RL_BeginMode2D: Camera2D camera  // Initialize 2D mode with custom camera
-//INLINE
-//	LIB::BeginMode2D(Camera2D camera);
-//ENDINLINE
-//ENDFUNCTION
+FUNCTION RL_BeginMode2D: camera AS RL_Camera2D  // Initialize 2D mode with custom camera
+INLINE
+	LIB::BeginMode2D( GLBasicCamera2D_to_RaylibCamera2D(camera) );
+ENDINLINE
+ENDFUNCTION
 
 FUNCTION RL_EndMode2D:  // Ends 2D mode with custom camera
 INLINE
@@ -438,11 +595,11 @@ INLINE
 ENDINLINE
 ENDFUNCTION
 
-//FUNCTION RL_BeginMode3D: Camera3D camera  // Initializes 3D mode with custom camera
-//INLINE
-//	LIB::BeginMode3D(Camera3D camera);
-//ENDINLINE
-//ENDFUNCTION
+FUNCTION RL_BeginMode3D: camera AS RL_Camera3D  // Initializes 3D mode with custom camera
+INLINE
+	LIB::BeginMode3D( GLBasicCamera3D_to_RaylibCamera3D(camera) );
+ENDINLINE
+ENDFUNCTION
 
 FUNCTION RL_EndMode3D:  // Ends 3D mode and returns to default 2D orthographic mode
 INLINE
@@ -450,11 +607,11 @@ INLINE
 ENDINLINE
 ENDFUNCTION
 
-//FUNCTION BeginTextureMode: RenderTexture2D target  // Initializes render texture for drawing
-//INLINE
-//	LIB::BeginTextureMode(RenderTexture2D target);
-//ENDINLINE
-//ENDFUNCTION
+FUNCTION BeginTextureMode: target AS RL_RenderTexture2D  // Initializes render texture for drawing
+INLINE
+	LIB::BeginTextureMode( GLBasicRenderTexture2D_to_RaylibRenderTexture2D(target) );
+ENDINLINE
+ENDFUNCTION
 
 FUNCTION RL_EndTextureMode:  // Ends drawing to render texture
 INLINE
@@ -477,48 +634,62 @@ ENDFUNCTION
 ////------------------------------
 //// Screen-space-related functions
 ////------------------------------
-//FUNCTION RL_GetMouseRay: Vector2 mousePosition, Camera camera  // Returns a ray trace from mouse position
-//INLINE
-//	return LIB::GetMouseRay(Vector2 mousePosition, Camera camera);
-//ENDINLINE
-//ENDFUNCTION
-//
-//FUNCTION RL_GetCameraMatrix: Camera camera  // Returns camera transform matrix
-//INLINE
-//	return LIB::GetCameraMatrix(Camera camera);
-//ENDINLINE
-//ENDFUNCTION
-//
-//FUNCTION RL_GetCameraMatrix2D: Camera2D camera  // Returns camera 2d transform matrix
-//INLINE
-//	return LIB::GetCameraMatrix2D(Camera2D camera);
-//ENDINLINE
-//ENDFUNCTION
-//
-//FUNCTION RL_GetWorldToScreen: Vector3 position, Camera camera  // Returns the screen space position for a 3d world space position
-//INLINE
-//	return LIB::GetWorldToScreen(Vector3 position, Camera camera);
-//ENDINLINE
-//ENDFUNCTION
-//
-//FUNCTION RL_GetWorldToScreenEx: Vector3 position, Camera camera,int width, int height  // Returns size position for a 3d world space position
-//INLINE
-//	return LIB::GetWorldToScreenEx(Vector3 position, Camera camera,int width, int height);
-//ENDINLINE
-//ENDFUNCTION
-//
-//FUNCTION RL_GetWorldToScreen2D: Vector2 position, Camera2D camera  // Returns the screen space position for a 2d camera world space position
-//INLINE
-//	return LIB::GetWorldToScreen2D(Vector2 position, Camera2D camera);
-//ENDINLINE
-//ENDFUNCTION
-//
-//FUNCTION RL_GetScreenToWorld2D: Vector2 position, Camera2D camera  // Returns the world space position for a 2d camera screen space position
-//INLINE
-//	return LIB::GetScreenToWorld2D(Vector2 position, Camera2D camera);
-//ENDINLINE
-//ENDFUNCTION
-//
+FUNCTION RL_GetMouseRay AS RL_Ray: mousePosition AS RL_Vector2, camera AS RL_Camera3D  // Returns a ray trace from mouse position
+INLINE
+	LIB::Ray r;
+	r = LIB::GetMouseRay(GLBasicVector2_to_RaylibVector2(mousePosition), (LIB::Camera)GLBasicCamera3D_to_RaylibCamera3D(camera) );
+	return RaylibRay_to_GLBasicRay(&r);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_GetCameraMatrix AS RL_Matrix: camera AS RL_Camera3D // Returns camera transform matrix
+INLINE
+	LIB::Matrix m;
+	m =  LIB::GetCameraMatrix( (LIB::Camera)GLBasicCamera3D_to_RaylibCamera3D(camera) );
+	return RaylibMatrix_to_GLBasicMatrix(&m);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_GetCameraMatrix2D AS RL_Matrix: camera AS RL_Camera2D // Returns camera 2d transform matrix
+INLINE
+	LIB::Matrix m;
+	m = LIB::GetCameraMatrix2D( GLBasicCamera2D_to_RaylibCamera2D(camera) );
+	return RaylibMatrix_to_GLBasicMatrix(&m);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_GetWorldToScreen AS RL_Vector2 : position AS RL_Vector3, camera AS RL_Camera3D // Returns the screen space position for a 3d world space position
+INLINE
+	LIB::Vector2 vec2;
+	vec2 =  LIB::GetWorldToScreen( GLBasicVector3_to_RaylibVector3(position), (LIB::Camera)GLBasicCamera3D_to_RaylibCamera3D(camera) );
+	return RaylibVector2_to_GLBasicVector2(&vec2);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_GetWorldToScreenEx AS RL_Vector2 : position AS RL_Vector3, camera AS RL_Camera3D, width%, height%  // Returns size position for a 3d world space position
+INLINE
+	LIB::Vector2 vec2;
+	vec2 = LIB::GetWorldToScreenEx( GLBasicVector3_to_RaylibVector3(position), (LIB::Camera)GLBasicCamera3D_to_RaylibCamera3D(camera) ,width, height );
+	return RaylibVector2_to_GLBasicVector2(&vec2);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_GetWorldToScreen2D AS RL_Vector2: position AS RL_Vector2, camera AS RL_Camera2D // Returns the screen space position for a 2d camera world space position
+INLINE
+	LIB::Vector2 vec2;
+	vec2 =  LIB::GetWorldToScreen2D( GLBasicVector2_to_RaylibVector2(position), GLBasicCamera2D_to_RaylibCamera2D(camera) );
+	return RaylibVector2_to_GLBasicVector2(&vec2);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_GetScreenToWorld2D AS RL_Vector2: position AS RL_Vector2, camera AS RL_Camera2D  // Returns the world space position for a 2d camera screen space position
+INLINE
+	LIB::Vector2 vec2;
+	vec2 = LIB::GetScreenToWorld2D( GLBasicVector2_to_RaylibVector2(position), GLBasicCamera2D_to_RaylibCamera2D(camera) );
+	return RaylibVector2_to_GLBasicVector2(&vec2);
+ENDINLINE
+ENDFUNCTION
+
 ////------------------------------
 //// Timing-related functions
 ////------------------------------
@@ -555,36 +726,46 @@ INLINE
 ENDINLINE
 ENDFUNCTION
 
-//FUNCTION RL_ColorNormalize: Color color  // Returns color normalized as float [0..1]
-//INLINE
-//	return LIB::ColorNormalize(Color color);
-//ENDINLINE
-//ENDFUNCTION
+FUNCTION RL_ColorNormalize AS RL_Vector4: color AS RL_Color // Returns color normalized as float [0..1]
+INLINE
+	LIB::Vector4 vec4;
+	vec4 = LIB::ColorNormalize(GLBasicColor_to_RaylibColor(color));
+	return RaylibVector4_to_GLBasicVector4(&vec4);
+ENDINLINE
+ENDFUNCTION
 
-//FUNCTION RL_ColorFromNormalized: Vector4 normalized  // Returns color from normalized values [0..1]
-//INLINE
-//	return LIB::ColorFromNormalized(Vector4 normalized);
-//ENDINLINE
-//ENDFUNCTION
-//
-//FUNCTION RL_ColorToHSV: Color color  // Returns HSV values for a Color
-//INLINE
-//	return LIB::ColorToHSV(Color color);
-//ENDINLINE
-//ENDFUNCTION
-//
-//FUNCTION RL_ColorFromHSV: Vector3 hsv  // Returns a Color from HSV values
-//INLINE
-//	return LIB::ColorFromHSV(Vector3 hsv);
-//ENDINLINE
-//ENDFUNCTION
-//
-//FUNCTION RL_GetColor: int hexValue  // Returns a Color struct from hexadecimal value
-//INLINE
-//	return LIB::GetColor(int hexValue);
-//ENDINLINE
-//ENDFUNCTION
-//
+FUNCTION RL_ColorFromNormalized AS RL_Color: normalized AS RL_Vector4  // Returns color from normalized values [0..1]
+INLINE
+	LIB::Color col;
+	col = LIB::ColorFromNormalized( GLBasicVector4_to_RaylibVector4(normalized) );
+	return RaylibColor_to_GLBasicColor(&col);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_ColorToHSV AS RL_Vector3: color AS RL_Color  // Returns HSV values for a Color
+INLINE
+	LIB::Vector3 vec3;
+	vec3 = LIB::ColorToHSV( GLBasicColor_to_RaylibColor(color) );
+	return RaylibVector3_to_GLBasicVector3(&vec3);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_ColorFromHSV AS RL_Color: hsv AS RL_Vector3  // Returns a Color from HSV values
+INLINE
+	LIB::Color col;
+	col = LIB::ColorFromHSV( GLBasicVector3_to_RaylibVector3(hsv) );
+	return RaylibColor_to_GLBasicColor(&col);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_GetColor AS RL_Color: hexValue  // Returns a Color struct from hexadecimal value
+INLINE
+	LIB::Color col;
+	col = LIB::GetColor(hexValue);
+	return RaylibColor_to_GLBasicColor(&col);
+ENDINLINE
+ENDFUNCTION
+
 FUNCTION RL_Fade: _color AS RL_Color, alpha#  // Color fade-in or fade-out, alpha goes from 0.0f to 1.0f
 INLINE
 	LIB::Color c;
@@ -623,11 +804,11 @@ ENDFUNCTION
 //ENDINLINE
 //ENDFUNCTION
 
-//FUNCTION RL_TraceLog: int logType, const char *text, ...  // Show trace log messages
-//INLINE
-//	LIB::TraceLog(int logType, const char *text, ...);
-//ENDINLINE
-//ENDFUNCTION
+FUNCTION RL_TraceLog: logType%, text$  // Show trace log messages
+INLINE
+	LIB::TraceLog(logType, text_Str.c_str());
+ENDINLINE
+ENDFUNCTION
 
 FUNCTION RL_TakeScreenshot: fileName$  // Takes a screenshot of current screen
 INLINE
@@ -1092,17 +1273,20 @@ ENDFUNCTION
 ////------------------------------
 //// Camera System Functions (Module: camera)
 ////------------------------------
-//FUNCTION RL_SetCameraMode: Camera camera, int mode  // Set camera mode
-//INLINE
-//	LIB::SetCameraMode(Camera camera, int mode);
-//ENDINLINE
-//ENDFUNCTION
-//
-//FUNCTION RL_UpdateCamera: Camera *camera  // Update camera position for selected mode
-//INLINE
-//	LIB::UpdateCamera(Camera *camera);
-//ENDINLINE
-//ENDFUNCTION
+FUNCTION RL_SetCameraMode: camera AS RL_Camera3D, mode%  // Set camera mode
+INLINE
+	LIB::SetCameraMode( (LIB::Camera)GLBasicCamera3D_to_RaylibCamera3D(camera), mode);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_UpdateCamera: camera AS RL_Camera3D  // Update camera position for selected mode
+INLINE
+	LIB::Camera cam;
+	cam = (LIB::Camera)GLBasicCamera3D_to_RaylibCamera3D(camera);	
+	LIB::UpdateCamera(&cam);
+	camera = RaylibCamera3D_to_GLBasicCamera3D((LIB::Camera3D*)&cam);
+ENDINLINE
+ENDFUNCTION
 
 FUNCTION RL_SetCameraPanControl: panKey  // Set camera pan key to combine with mouse movement
 INLINE
@@ -1167,13 +1351,13 @@ ENDFUNCTION
 //	return LIB::LoadImageRaw(const char *fileName, int width, int height, int format, int headerSize);
 //ENDINLINE
 //ENDFUNCTION
-//
-//FUNCTION RL_UnloadImage: Image image  // Unload image from CPU memory
-//INLINE
-//	LIB::UnloadImage(Image image);
-//ENDINLINE
-//ENDFUNCTION
-//
+
+FUNCTION RL_UnloadImage: image AS RL_Image // Unload image from CPU memory
+INLINE
+	LIB::UnloadImage(GLBasicImage_to_RaylibImage(image));
+ENDINLINE
+ENDFUNCTION
+
 //FUNCTION RL_ExportImage: Image image, const char *fileName  // Export image data to file
 //INLINE
 //	LIB::ExportImage(Image image, const char *fileName);

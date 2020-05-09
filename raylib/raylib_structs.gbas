@@ -97,6 +97,11 @@ TYPE RL_Camera3D			// <-- the same as Camera
 	_type%					// int. Name should "type"... but GLB will not let me
 ENDTYPE
 
+TYPE RL_Ray
+	position AS RL_Vector3
+	direction AS RL_Vector3
+ENDTYPE
+
 TYPE RL_Camera2D
 	offset AS RL_Vector2
 	target AS RL_Vector2

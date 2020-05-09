@@ -34,17 +34,21 @@ logo = RL_LoadTexture("sprites/raylib_for_glbasic.png")
 LOCAL posX = 260, posY = 175
 
 LOCAL keyboard AS RL_ENUM_KeyboardKey // The "KeyboardKey-Enum"
+LOCAL traceType AS RL_ENUM_TraceLogType // The "TraceType-Enum"
+
+LOCAL Cam2D AS RL_Camera2D
+RL_TraceLog(traceType.LOG_WARNING, "Test warning!!!")
 
 
 WHILE NOT RL_WindowShouldClose()
-	
+
 	// Move the Logo
 	IF RL_IsKeyDown(keyboard.KEY_A)
 		DEC posX, 2
 	ENDIF
 	IF RL_IsKeyDown(keyboard.KEY_D)
 		INC posX, 2
-	ENDIF	
+	ENDIF
 	IF RL_IsKeyDown(keyboard.KEY_W)
 		DEC posY, 2
 	ENDIF
@@ -52,13 +56,13 @@ WHILE NOT RL_WindowShouldClose()
 		INC posY, 2
 	ENDIF
 
-	
+
 	RL_BeginDrawing()
-		
+
 		RL_ClearBackground(col_lightgray)
 
 		RL_DrawTexture(logo, posX, posY, col_white)
-		
+
 		RL_DrawText("Logo-PosX: "+ posX, 0,0,18,col_raywhite)
 		RL_DrawText("Logo-PosY: "+ posY, 0,20,18,col_raywhite)
 

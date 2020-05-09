@@ -3,6 +3,18 @@
 // Start: Tuesday, May 05, 2020
 // IDE Version: 16.508
 
+// TraceTypes
+TYPE RL_ENUM_TraceLogType
+    LOG_ALL 	= 0 // Display all logs
+    LOG_TRACE	= 1
+    LOG_DEBUG	= 2
+    LOG_INFO	= 3
+    LOG_WARNING	= 4
+    LOG_ERROR	= 5
+    LOG_FATAL	= 6
+    LOG_NONE	= 7 // Disable logging
+ENDTYPE
+
 // Keyboard keys
 TYPE RL_ENUM_KeyboardKey
     // Alphanumeric keys
