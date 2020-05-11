@@ -4,7 +4,7 @@ Raylib for GLBasic
 ![Logo](https://github.com/SliverLIVE/RayLib/blob/master/raylib_for_glbasic.png)
 
 #### THIS PORT IS NOT READY TO USE!
-### Current status:
+## Current status:
 #### Core     [done]
 #### Shapes   [done]
 #### Textures [in work]
