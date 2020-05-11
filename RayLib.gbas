@@ -36,9 +36,7 @@ LOCAL posX = 260, posY = 175
 LOCAL keyboard AS RL_ENUM_KeyboardKey // The "KeyboardKey-Enum"
 LOCAL traceType AS RL_ENUM_TraceLogType // The "TraceType-Enum"
 
-LOCAL Cam2D AS RL_Camera2D
 RL_TraceLog(traceType.LOG_WARNING, "Test warning!!!")
-
 
 WHILE NOT RL_WindowShouldClose()
 
@@ -60,6 +58,8 @@ WHILE NOT RL_WindowShouldClose()
 	RL_BeginDrawing()
 
 		RL_ClearBackground(col_lightgray)
+
+		RL_DrawCircle(100,100,25, col_raywhite)
 
 		RL_DrawTexture(logo, posX, posY, col_white)
 

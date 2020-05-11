@@ -29,7 +29,21 @@ namespace LIB{
 		vec2.y = v2.y;
 		return vec2;
 	}
-	
+
+	LIB::Vector2* GLBasicVector2Array_to_RaylibVector2Array(DGArray<RL_Vector2> vecs)
+	{
+		LIB:: Vector2 * v;
+		int count = LEN(vecs());
+
+		v = (LIB::Vector2 *)malloc(count*sizeof(LIB::Vector2));
+
+		for(int i = 0; i < count; i++)
+		{
+			v[i] = GLBasicVector2_to_RaylibVector2(vecs(i));
+		}
+		return v;
+	}
+
 	// VECTOR3
 	RL_Vector3 RaylibVector3_to_GLBasicVector3(LIB::Vector3 *v3)
 	{
@@ -68,7 +82,30 @@ namespace LIB{
 		vec4.z = v4.z;
 		vec4.w = v4.w;
 		return vec4;
-	}	
+	}
+	
+	// RECTANGLE
+	RL_Rectangle RaylibRectangle_to_GLBasicRectangle(LIB::Rectangle *r)
+	{
+		RL_Rectangle rct;
+		rct.x 		= r->x;
+		rct.y 		= r->y;
+		rct.width 	= r->width;
+		rct.height 	= r->height;
+		
+		return rct;
+	}
+	
+	LIB::Rectangle GLBasicRectangle_to_RaylibRectangle(RL_Rectangle r)
+	{
+		LIB::Rectangle rct;
+		rct.x 		= r.x;
+		rct.y 		= r.y;
+		rct.width 	= r.width;
+		rct.height 	= r.height;
+		
+		return rct;	
+	}
 	
 	// COLOR
 	RL_Color RaylibColor_to_GLBasicColor(LIB::Color *c)
@@ -92,7 +129,7 @@ namespace LIB{
 
 		return col;
 	}
-	
+
 	// FONT
 	RL_Font RaylibFont_to_GLBasicFont(LIB::Font *f)
 	{
@@ -234,7 +271,7 @@ namespace LIB{
 		cam.target 		= RaylibVector2_to_GLBasicVector2(&c->target);
 		cam.rotation 	= c->rotation;
 		cam.zoom		= c->zoom;
-		
+
 		return cam;
 	}
 
@@ -246,7 +283,7 @@ namespace LIB{
 		cam.target 		= GLBasicVector2_to_RaylibVector2(c.target);
 		cam.rotation 	= c.rotation;
 		cam.zoom		= c.zoom;
-		
+
 		return cam;
 	}
 
@@ -259,10 +296,10 @@ namespace LIB{
 		cam.up			= RaylibVector3_to_GLBasicVector3(&c->up);
 		cam.fovy		= c->fovy;
 		cam._type		= c->type;
-		
+
 		return cam;
 	}
-	
+
 	LIB::Camera3D GLBasicCamera3D_to_RaylibCamera3D(RL_Camera3D c)
 	{
 		LIB::Camera3D cam;
@@ -271,18 +308,18 @@ namespace LIB{
 		cam.up			= GLBasicVector3_to_RaylibVector3(c.up);
 		cam.fovy		= c.fovy;
 		cam.type		= c._type;
-		
+
 		return cam;
 	}
-	
-	
+
+
 	// RAY
 	RL_Ray RaylibRay_to_GLBasicRay(LIB::Ray *r)
 	{
 		RL_Ray ray;
 		ray.position	= RaylibVector3_to_GLBasicVector3(&r->position);
 		ray.direction	= RaylibVector3_to_GLBasicVector3(&r->direction);
-		
+
 		return ray;
 	}
 
@@ -291,11 +328,11 @@ namespace LIB{
 		LIB::Ray ray;
 		ray.position	= GLBasicVector3_to_RaylibVector3(r.position);
 		ray.direction	= GLBasicVector3_to_RaylibVector3(r.direction);
-		
+
 		return ray;
 	}
-	
-	
+
+
 	// RENDERTEXTURE2D
 	RL_RenderTexture2D RaylibRenderTexture2D_to_GLBasicRenderTexture2D(LIB::RenderTexture2D *r)
 	{
@@ -304,7 +341,7 @@ namespace LIB{
 		ren.texture			= RaylibTexture2D_to_GLBasicTexture2D(&r->texture);
 		ren.depth			= RaylibTexture2D_to_GLBasicTexture2D(&r->depth);
 		ren.depthTexture	= (int)r->depthTexture;
-		
+
 		return ren;
 	}
 
@@ -315,11 +352,11 @@ namespace LIB{
 		ren.texture			= GLBasicTexture2D_to_RaylibTexture2D(r.texture);
 		ren.depth			= GLBasicTexture2D_to_RaylibTexture2D(r.depth);
 		ren.depthTexture	= (bool)r.depthTexture;
-		
+
 		return ren;
-	}	
-	
-	// MATRIX	
+	}
+
+	// MATRIX
 	RL_Matrix RaylibMatrix_to_GLBasicMatrix(LIB::Matrix *m)
 	{
 		RL_Matrix mat;
@@ -327,7 +364,7 @@ namespace LIB{
 		mat.m1 = m->m1; mat.m5 = m->m5; mat.m9 = m->m9; mat.m13 = m->m13;
 		mat.m2 = m->m2; mat.m6 = m->m6; mat.m10 = m->m10; mat.m14 = m->m14;
 		mat.m3 = m->m3; mat.m7 = m->m7; mat.m11 = m->m11; mat.m15 = m->m15;
-		
+
 		return mat;
 	}
 
@@ -338,10 +375,10 @@ namespace LIB{
 		mat.m1 = m.m1; mat.m5 = m.m5; mat.m9 = m.m9; mat.m13 = m.m13;
 		mat.m2 = m.m2; mat.m6 = m.m6; mat.m10 = m.m10; mat.m14 = m.m14;
 		mat.m3 = m.m3; mat.m7 = m.m7; mat.m11 = m.m11; mat.m15 = m.m15;
-		
+
 		return mat;
 	}
-	
+
 namespace __GLBASIC__{
 ENDINLINE
 
@@ -1282,7 +1319,7 @@ ENDFUNCTION
 FUNCTION RL_UpdateCamera: camera AS RL_Camera3D  // Update camera position for selected mode
 INLINE
 	LIB::Camera cam;
-	cam = (LIB::Camera)GLBasicCamera3D_to_RaylibCamera3D(camera);	
+	cam = (LIB::Camera)GLBasicCamera3D_to_RaylibCamera3D(camera);
 	LIB::UpdateCamera(&cam);
 	camera = RaylibCamera3D_to_GLBasicCamera3D((LIB::Camera3D*)&cam);
 ENDINLINE
@@ -1832,7 +1869,263 @@ ENDFUNCTION
 //ENDFUNCTION
 
 
+SUB _RAYLIB_SHAPES:
+	// JUST FOR QUICKJUMPING IN SOURCE!
+ENDSUB
+//
+////------------------------------
+//// Basic shapes drawing functions
+////------------------------------
+FUNCTION RL_DrawPixel: posX%, posY%, color AS RL_Color  // Draw a pixel
+INLINE
+	LIB::DrawPixel(posX, posY, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
 
+FUNCTION RL_DrawPixelV: position AS RL_Vector2, color AS RL_Color  // Draw a pixel
+INLINE
+	LIB::DrawPixelV( GLBasicVector2_to_RaylibVector2(position), GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawLine: startPosX%, startPosY%, endPosX%, endPosY%, color AS RL_Color // Draw a line
+INLINE
+	LIB::DrawLine( startPosX, startPosY, endPosX, endPosY, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawLineV: startPos AS RL_Vector2, endPos AS RL_Vector2, color AS RL_Color  // Draw a line
+INLINE
+	LIB::DrawLineV( GLBasicVector2_to_RaylibVector2(startPos), GLBasicVector2_to_RaylibVector2(endPos), GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawLineEx: startPos AS RL_Vector2, endPos AS RL_Vector2, thick#, color AS RL_Color  // Draw a line defining thickness
+INLINE
+	LIB::DrawLineEx(GLBasicVector2_to_RaylibVector2(startPos), GLBasicVector2_to_RaylibVector2(endPos), thick, GLBasicColor_to_RaylibColor(color));
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawLineBezier: startPos AS RL_Vector2, endPos AS RL_Vector2, thick#, color AS RL_Color  // Draw a line using cubic-bezier curves in-out
+INLINE
+	LIB::DrawLineBezier(GLBasicVector2_to_RaylibVector2(startPos), GLBasicVector2_to_RaylibVector2(endPos), thick, GLBasicColor_to_RaylibColor(color));
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawLineStrip: points[] AS RL_Vector2, numPoints%, color AS RL_Color  // Draw lines sequence
+INLINE
+	LIB::DrawLineStrip( GLBasicVector2Array_to_RaylibVector2Array(points()), numPoints, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawCircle: centerX%, centerY%, radius#, color AS RL_Color // Draw a color-filled circle
+INLINE
+	LIB::DrawCircle( centerX, centerY, radius, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawCircleSector: center AS RL_Vector2, radius#, startAngle%, endAngle%, segments%, color AS RL_Color  // Draw a piece of a circle
+INLINE
+	LIB::DrawCircleSector(GLBasicVector2_to_RaylibVector2(center), radius, startAngle, endAngle, segments, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawCircleSectorLines: center AS RL_Vector2, radius#, startAngle%, endAngle%, segments%, color AS RL_Color   // Draw circle sector outline
+INLINE
+	LIB::DrawCircleSectorLines( GLBasicVector2_to_RaylibVector2(center), radius, startAngle, endAngle, segments, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawCircleGradient: centerX%, centerY%, radius#, color1 AS RL_Color, color2 AS RL_Color  // Draw a gradient-filled circle
+INLINE
+	LIB::DrawCircleGradient(centerX, centerY, radius, GLBasicColor_to_RaylibColor(color1), GLBasicColor_to_RaylibColor(color2) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawCircleV: center AS RL_Vector2, radius#, color AS RL_Color  // Draw a color-filled circle
+INLINE
+	LIB::DrawCircleV(GLBasicVector2_to_RaylibVector2(center), radius, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawCircleLines: centerX%, centerY%, radius#, color AS RL_Color  // Draw circle outline
+INLINE
+	LIB::DrawCircleLines(centerX, centerY, radius, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawEllipse: centerX%, centerY%, radiusH#, radiusV#, color AS RL_Color  // Draw ellipse
+INLINE
+	LIB::DrawEllipse(centerX, centerY, radiusH, radiusV, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawEllipseLines: centerX%, centerY%, radiusH#, radiusV#, color AS RL_Color // Draw ellipse outline
+INLINE
+	LIB::DrawEllipseLines(centerX, centerY, radiusH, radiusV, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawRing: center AS RL_Vector2, innerRadius#, outerRadius#, startAngle%, endAngle%, segments%, color AS RL_Color  // Draw ring
+INLINE
+	LIB::DrawRing(GLBasicVector2_to_RaylibVector2(center) , innerRadius, outerRadius, startAngle, endAngle, segments, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawRingLines: center AS RL_Vector2, innerRadius#, outerRadius#, startAngle%, endAngle%, segments%, color AS RL_Color  // Draw ring outline
+INLINE
+	LIB::DrawRingLines(GLBasicVector2_to_RaylibVector2(center), innerRadius, outerRadius, startAngle, endAngle, segments, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawRectangle: posX%, posY%, width%, height%, color AS RL_Color  // Draw a color-filled rectangle
+INLINE
+	LIB::DrawRectangle( posX, posY, width, height, GLBasicColor_to_RaylibColor(color));
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawRectangleV: position AS RL_Vector2, size AS RL_Vector2, color AS RL_Color  // Draw a color-filled rectangle
+INLINE
+	LIB::DrawRectangleV(GLBasicVector2_to_RaylibVector2(position), GLBasicVector2_to_RaylibVector2(size), GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawRectangleRec: rec AS RL_Rectangle, color AS RL_Color  // Draw a color-filled rectangle
+INLINE
+	LIB::DrawRectangleRec(GLBasicRectangle_to_RaylibRectangle(rec), GLBasicColor_to_RaylibColor(color));
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawRectanglePro: rec AS RL_Rectangle , origin AS RL_Vector2, rotation#, color AS RL_Color  // Draw a color-filled rectangle with pro parameters
+INLINE
+	LIB::DrawRectanglePro(GLBasicRectangle_to_RaylibRectangle(rec), GLBasicVector2_to_RaylibVector2(origin), rotation, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawRectangleGradientV: posX%, posY%, width%, height%, color1 AS RL_Color, color2 AS RL_Color  // Draw a vertical-gradient-filled rectangle
+INLINE
+	LIB::DrawRectangleGradientV(posX, posY, width, height, GLBasicColor_to_RaylibColor(color1), GLBasicColor_to_RaylibColor(color2) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawRectangleGradientH: posX%, posY%, width%, height%, color1 AS RL_Color, color2 AS RL_Color  // Draw a horizontal-gradient-filled rectangle
+INLINE
+	LIB::DrawRectangleGradientH(posX, posY, width, height, GLBasicColor_to_RaylibColor(color1), GLBasicColor_to_RaylibColor(color2) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawRectangleGradientEx: rec AS RL_Rectangle, col1 AS RL_Color, col2 AS RL_Color, col3 AS RL_Color, col4 AS RL_Color  // Draw a gradient-filled rectangle with custom vertex colors
+INLINE
+	LIB::DrawRectangleGradientEx(GLBasicRectangle_to_RaylibRectangle(rec), GLBasicColor_to_RaylibColor(col1), GLBasicColor_to_RaylibColor(col2), GLBasicColor_to_RaylibColor(col3), GLBasicColor_to_RaylibColor(col4));
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawRectangleLines: posX%, posY%, width%, height%, color AS RL_Color  // Draw rectangle outline
+INLINE
+	LIB::DrawRectangleLines(posX, posY, width, height, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawRectangleLinesEx: rec AS RL_Rectangle, lineThick%, color AS RL_Color // Draw rectangle outline with extended parameters
+INLINE
+	LIB::DrawRectangleLinesEx(GLBasicRectangle_to_RaylibRectangle(rec), lineThick, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawRectangleRounded: rec AS RL_Rectangle, roundness#, segments%, color AS RL_Color // Draw rectangle with rounded edges
+INLINE
+	LIB::DrawRectangleRounded(GLBasicRectangle_to_RaylibRectangle(rec), roundness, segments, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawRectangleRoundedLines: rec AS RL_Rectangle, roundness#, segments%, lineThick%, color AS RL_Color  // Draw rectangle with rounded edges outline
+INLINE
+	LIB::DrawRectangleRoundedLines(GLBasicRectangle_to_RaylibRectangle(rec), roundness, segments, lineThick, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawTriangle: v1 AS RL_Vector2 , v2 AS RL_Vector2, v3 AS RL_Vector2, color AS RL_Color  // Draw a color-filled triangle
+INLINE
+	LIB::DrawTriangle(GLBasicVector2_to_RaylibVector2(v1), GLBasicVector2_to_RaylibVector2(v2), GLBasicVector2_to_RaylibVector2(v3), GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawTriangleLines: v1 AS RL_Vector2, v2 AS RL_Vector2, v3 AS RL_Vector2, color AS RL_Color  // Draw triangle outline
+INLINE
+	LIB::DrawTriangleLines(GLBasicVector2_to_RaylibVector2(v1), GLBasicVector2_to_RaylibVector2(v2), GLBasicVector2_to_RaylibVector2(v3), GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawTriangleFan: points[] AS RL_Vector2, numPoints%, color AS RL_Color  // Draw a triangle fan defined by points
+INLINE
+	LIB::DrawTriangleFan(GLBasicVector2Array_to_RaylibVector2Array(points()), numPoints, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawTriangleStrip: points[] AS RL_Vector2, pointsCount%, color AS RL_Color  // Draw a triangle strip defined by points
+INLINE
+	LIB::DrawTriangleStrip(GLBasicVector2Array_to_RaylibVector2Array(points()), pointsCount, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawPoly: center AS RL_Vector2, sides%, radius#, rotation#, color AS RL_Color  // Draw a regular polygon
+INLINE
+	LIB::DrawPoly(GLBasicVector2_to_RaylibVector2(center), sides, radius, rotation, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_DrawPolyLines: center AS RL_Vector2, sides%, radius#, rotation#, color AS RL_Color  // Draw a polygon outline of n sides
+INLINE
+	LIB::DrawPolyLines(GLBasicVector2_to_RaylibVector2(center), sides, radius, rotation, GLBasicColor_to_RaylibColor(color) );
+ENDINLINE
+ENDFUNCTION
+
+////------------------------------
+//// Basic shapes collision detection functions
+////------------------------------
+FUNCTION RL_CheckCollisionRecs: rec1 AS RL_Rectangle, rec2 AS RL_Rectangle  // Check collision between two rectangles
+INLINE
+	return LIB::CheckCollisionRecs(GLBasicRectangle_to_RaylibRectangle(rec1), GLBasicRectangle_to_RaylibRectangle(rec2) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_CheckCollisionCircles: center1 AS RL_Vector2, radius1#, center2 AS RL_Vector2, radius2#  // Check collision between two circles
+INLINE
+	return LIB::CheckCollisionCircles(GLBasicVector2_to_RaylibVector2(center1), radius1, GLBasicVector2_to_RaylibVector2(center2), radius2);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_CheckCollisionCircleRec: center AS RL_Vector2, radius#, rec AS RL_Rectangle  // Check collision between circle and rectangle
+INLINE
+	return LIB::CheckCollisionCircleRec(GLBasicVector2_to_RaylibVector2(center), radius, GLBasicRectangle_to_RaylibRectangle(rec) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_GetCollisionRec AS RL_Rectangle: rec1 AS RL_Rectangle, rec2 AS RL_Rectangle  // Get collision rectangle for two rectangles collision
+INLINE
+	LIB::Rectangle rect;
+	rect = LIB::GetCollisionRec(GLBasicRectangle_to_RaylibRectangle(rec1), GLBasicRectangle_to_RaylibRectangle(rec2) );
+	return RaylibRectangle_to_GLBasicRectangle(&rect);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_CheckCollisionPointRec: point AS RL_Vector2, rec AS RL_Rectangle  // Check if point is inside rectangle
+INLINE
+	return LIB::CheckCollisionPointRec(GLBasicVector2_to_RaylibVector2(point), GLBasicRectangle_to_RaylibRectangle(rec) );
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_CheckCollisionPointCircle: point AS RL_Vector2, center AS RL_Vector2, radius#  // Check if point is inside circle
+INLINE
+	return LIB::CheckCollisionPointCircle(GLBasicVector2_to_RaylibVector2(point), GLBasicVector2_to_RaylibVector2(center), radius);
+ENDINLINE
+ENDFUNCTION
+
+FUNCTION RL_CheckCollisionPointTriangle: point AS RL_Vector2, p1 AS RL_Vector2, p2 AS RL_Vector2, p3 AS RL_Vector2  // Check if point is inside a triangle
+INLINE
+	return LIB::CheckCollisionPointTriangle(GLBasicVector2_to_RaylibVector2(point), GLBasicVector2_to_RaylibVector2(p1), GLBasicVector2_to_RaylibVector2(p2), GLBasicVector2_to_RaylibVector2(p3) );
+ENDINLINE
+ENDFUNCTION
 
 
 
